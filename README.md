@@ -1,22 +1,22 @@
 # ecommerce-admin-panel
 
-Admin panel + API server 
+Admin panel + API server <br>
 
 # All project RUN
-in root sirectory
-INSTALL all <code>npm install-all</code>
-RUN all <code>npm start</code>
+in root directory<br>
+INSTALL all <code>npm install-all</code><br>
+RUN all <code>npm start</code><br>
 
 # Admin panel
-Directory - front/
-Vue3 + Pinia + Vue router
-
-INSTALL - <code>npm install</code>
-START - <code>npm run serve</code>
+Directory - front/<br>
+Vue3 + Pinia + Vue router<br>
+<br>
+INSTALL - <code>npm install</code><br>
+START - <code>npm run serve</code><br>
 
 # API Server
-Directory - server/
-Node.js + EXPRESS
-
-INSTALL - <code>npm install</code>
-START - <code>npm start</code>
+Directory - server/<br>
+Node.js + EXPRESS<br>
+<br>
+INSTALL - <code>npm install</code><br>
+START - <code>npm start</code><br>
