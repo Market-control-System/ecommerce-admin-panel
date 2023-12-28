@@ -1,4 +1,6 @@
 # ecommerce-admin-panel
+Board with info about this<br>
+https://miro.com/app/board/uXjVN_YdrRM=/?share_link_id=748709465984
 
 Admin panel + API server <br>
 
