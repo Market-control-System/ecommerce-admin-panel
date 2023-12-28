@@ -9,8 +9,5 @@
     },
     "devDependencies": {
         "concurrently": "^5.2.0"
-    },
-    "dependencies": {
-        "bootstrap": "^5.3.2"
     }
 }
