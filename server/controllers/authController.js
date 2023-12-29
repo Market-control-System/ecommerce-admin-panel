@@ -16,7 +16,7 @@ const login = async (req, res) => {
           result.msg = 'Authentication failed';
           return res.json(result);
       }
-      const token = tokenGenerator.generate(user.id);
+      const token = tokenGenerator.generate(user.id, user.role);
 
       result.error = false;
       result.data  = {
