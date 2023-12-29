@@ -1,17 +1,32 @@
-import { authenticate } from '../models/userModel';
-import { generate } from '../utils/tokenGenerator';
+import authModul from '../models/authModel.js';
+import tokenGenerator from '../utils/tokenGenerator.js';
+
+const result = {
+    error: true,
+    msg: 'Error in init',
+    data: null,
+};
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await authenticate(username, password);
-    if (!user) {
-      return res.status(401).json({ message: 'Authentication failed' });
-    }
-    const token = generate(user.id);
-    res.json({ token });
+      const { phoneNumber, password } = req.body;
+      const user = await authModul.authenticate(phoneNumber, password);
+      if (!user) {
+          result.error = true;
+          result.msg = 'Authentication failed';
+          return res.json(result);
+      }
+      const token = tokenGenerator.generate(user.id);
+
+      result.error = false;
+      result.data  = {
+        token:token,
+      }
+      return res.json(result);
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+      result.error = true;
+      result.msg = `Internal server error. Msg = ${error}`;
+      return res.json(result);
   }
 };
 

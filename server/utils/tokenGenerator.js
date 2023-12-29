@@ -1,4 +1,6 @@
-import { sign } from 'jsonwebtoken';
+import pkg from 'jsonwebtoken';
+
+const { sign } = pkg;
 
 const generate = (userId) => {
   return sign({ id: userId }, 'secret_key', { expiresIn: '1h' });

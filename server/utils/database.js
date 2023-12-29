@@ -1,6 +1,7 @@
 import { createPool } from 'mysql2/promise';
+import {configDBPr} from '../inc/configService.js';
 
 // Настройте подключение к MySQL
-const pool = createPool({ /* параметры подключения */ });
+const pool = createPool(configDBPr);
 
 export default pool;

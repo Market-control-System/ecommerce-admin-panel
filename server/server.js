@@ -1,8 +1,13 @@
 import express, { json } from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 import authRoutes from './routes/authRoutes.js';
+import 'dotenv/config';
 
 const app = express();
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(json()); 
 
 // Подключение маршрутов
