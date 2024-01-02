@@ -21,7 +21,7 @@ const login = async (req, res) => {
       if (!token.err) {
           result.error = false;
           result.data  = {
-            token:token,
+            token:token.token,
           }
       } else {
           result.error = true;
