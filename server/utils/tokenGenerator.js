@@ -1,13 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { configAuth } from '../inc/configService.js';
 
-const generate = (userId, userRole) => {
+const generate = async (data) => {
   try {
     const token = jwt.sign(
-      { 
-        id: userId, 
-        role: userRole // 0 для админа, 1-10 для других уровней доступа
-      }, 
+      data, 
       configAuth.secret_key,
       { expiresIn: configAuth.expires_key }
     );
@@ -19,14 +16,14 @@ const generate = (userId, userRole) => {
   }
 };
 
-const decode = (token) => {
+const decode = async (token) => {
   try {
     const decoded = jwt.verify(token, configAuth.secret_key, (err, decoded) => {
       if (err) {
         return {err:true, msg:`Error in decode TOKEN. msg - ${err}`}
       } else {
         //  decoded.id и decoded.role
-        return {err:false, user:{id:decoded.id, role:decoded.role}}
+        return {err:false, user:decoded}
       }
     });
     
@@ -37,4 +34,5 @@ const decode = (token) => {
 
 export default {
   generate,
+  decode,
 };
