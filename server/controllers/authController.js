@@ -10,6 +10,7 @@ const result = {
 const login = async (req, res) => {
   try {
       const { phoneNumber, password } = req.body;
+      //console.log('AUTH login - ', phoneNumber, ' | Pass - ', password);
       const user = await authModul.authenticate(phoneNumber, password);
       if (!user) {
           result.error = true;
@@ -17,11 +18,16 @@ const login = async (req, res) => {
           return res.json(result);
       }
       const token = tokenGenerator.generate(user.id, user.role);
-
-      result.error = false;
-      result.data  = {
-        token:token,
+      if (!token.err) {
+          result.error = false;
+          result.data  = {
+            token:token,
+          }
+      } else {
+          result.error = true;
+          result.msg += `Error in TOKEN generate. MSG - ${token.msg}`;
       }
+      
       return res.json(result);
   } catch (error) {
       result.error = true;

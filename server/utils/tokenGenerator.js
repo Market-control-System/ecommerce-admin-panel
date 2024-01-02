@@ -1,7 +1,5 @@
-import pkg from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { configAuth } from '../inc/configService.js';
-
-const { sign } = pkg;
 
 const generate = (userId, userRole) => {
   try {
@@ -23,9 +21,15 @@ const generate = (userId, userRole) => {
 
 const decode = (token) => {
   try {
-    const decoded = jwt.verify(token, configAuth.secret_key);
-    //  decoded.id и decoded.role
-    return {err:false, user:{id:decoded.id, role:decoded.role}}
+    const decoded = jwt.verify(token, configAuth.secret_key, (err, decoded) => {
+      if (err) {
+        return {err:true, msg:`Error in decode TOKEN. msg - ${err}`}
+      } else {
+        //  decoded.id и decoded.role
+        return {err:false, user:{id:decoded.id, role:decoded.role}}
+      }
+    });
+    
   } catch (err) {
     return {err:true, msg:`Error decode token - ${err}`}
   }
