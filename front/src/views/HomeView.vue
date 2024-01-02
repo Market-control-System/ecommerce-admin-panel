@@ -1,18 +1,15 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
+<script setup>
+import { useAuthStore } from '@/store/auth';
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+const authStore = useAuthStore();
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
+const exitBtn = () => {
+  authStore.logout();
 };
 </script>
+
+<template>
+  <div class="container">
+    <button class="btn btn-primary" @click="exitBtn">Exit</button>
+  </div>
+</template>
