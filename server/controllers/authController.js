@@ -12,26 +12,31 @@ const login = async (req, res) => {
       const { phoneNumber, password } = req.body;
       //console.log('AUTH login - ', phoneNumber, ' | Pass - ', password);
       const user = await authModul.authenticate(phoneNumber, password);
-      if (!user) {
-          result.error = true;
-          result.msg = 'Authentication failed';
-          return res.json(result);
-      }
-      const token = tokenGenerator.generate(user.id, user.role);
-      if (!token.err) {
-          result.error = false;
-          result.data  = {
-            token:token.token,
+      if (!user.err) {
+          const token = await tokenGenerator.generate(user.data);
+          if (!token.err) {
+              result.error = false;
+              result.msg = '';
+              result.data  = {
+                token:token.token,
+              }
+          } else {
+              result.error = true;
+              result.msg += `Error in TOKEN generate. MSG - ${token.msg}`;
+              result.data = null;
           }
+      
+          return res.json(result);
       } else {
           result.error = true;
-          result.msg += `Error in TOKEN generate. MSG - ${token.msg}`;
+          result.msg = 'Authentication failed. ' + user.msg;
+          result.data = null;
+          return res.json(result);
       }
-      
-      return res.json(result);
   } catch (error) {
       result.error = true;
       result.msg = `Internal server error. Msg = ${error}`;
+      result.data = null;
       return res.json(result);
   }
 };
