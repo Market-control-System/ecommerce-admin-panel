@@ -17,6 +17,7 @@ export const configDBPanel = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME_PANEL,
+    charset: 'utf8'
 };
 export const configAuth = {
     secret_key: 'prKey',

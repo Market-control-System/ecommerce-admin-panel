@@ -9,6 +9,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(json()); 
+app.use(express.urlencoded({ extended: true }));
 
 // Подключение маршрутов
 app.use('/api/auth', authRoutes);
