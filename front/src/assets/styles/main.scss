@@ -1,0 +1,18 @@
+@import "bootstrap/scss/bootstrap";
+
+body {
+    //background-color: var(--bs-body-bg-rgb);
+    color: $gray-200;
+    background-color: $dark;
+  
+}
+
+  
+.side-bar-logo {
+      height: var(--bs-app-header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      flex-shrink: 0;
+}
