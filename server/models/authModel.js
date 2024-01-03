@@ -31,10 +31,10 @@ const authenticate = async (phoneNumber, passwordText) => {
       return result;
     }
 
-    const { id, role, username, dateCreate, dateUpdate, block } = user;
+    const { id, role, userName, dateCreate, dateUpdate, block } = user;
     result.err = false;
     result.msg = '';
-    result.data = { id, role, username, dateCreate, dateUpdate, block };
+    result.data = { id, role, userName, dateCreate, dateUpdate, block };
 
     
     //console.log('result query to DB - ', rows);
