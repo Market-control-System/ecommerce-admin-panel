@@ -6,21 +6,23 @@ import { useErrorStore } from './error';
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
+    user: null,
   }),
   actions: {
     async login(login, password) {
       const errorStore = useErrorStore();
       // логика для входа
-      console.log(login, password);
       //this.isAuthenticated = true;
       try {
           const response = await sendLogin(login, password);
-          console.log('Login successful:', response);
+          //console.log('Login successful:', response);
           // Обработка ответа, например, сохранение токена аутентификации
           if (!response.error){
-              console.log('god login');
-              this.isAuthenticated = true;
+              //console.log('god login');
               localStorage.setItem('authToken', response.data.token);
+              localStorage.setItem('userData', JSON.stringify(response.data.user));
+              this.user = response.data.user;
+              this.isAuthenticated = true;
               router.push('/'); 
           } else {
               errorStore.error = true;
