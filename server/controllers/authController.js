@@ -19,6 +19,7 @@ const login = async (req, res) => {
               result.msg = '';
               result.data  = {
                 token:token.token,
+                user:user.data,
               }
           } else {
               result.error = true;
