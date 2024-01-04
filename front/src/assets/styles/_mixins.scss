@@ -1,0 +1,19 @@
+//@import 'bootstrap/scss/bootstrap';
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+@mixin logo-left {
+    font-weight: 800;
+    color: $gray-400; 
+    text-align: left;
+}
+
+@mixin box-border($color-name) {
+    $color-value: map-get($theme-colors-border-subtle, $color-name);
+    border-color: $color-value;   
+    border-style: solid;
+    border-width: 1px;
+}

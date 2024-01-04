@@ -1,4 +1,5 @@
 <script setup>
+//import '../assets/styles/mainCarcas.scss';
 import { useAuthStore } from '@/store/auth';
 
 const authStore = useAuthStore();
@@ -10,32 +11,23 @@ const exitBtn = () => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container ">
     <button class="btn btn-primary" @click="exitBtn">Exit</button>
     <div class="row">
       <div class="col-3">
-        <div class="side-bar-logo">Admin Panel</div>
-        {{ authStore.user }}
+        <div class="left-menu">
+          <div class="side-bar-logo">Admin Panel</div>
+
+        </div>
       </div>
       <div class="col-9">
-
+        {{ authStore.user }}
       </div>
     </div>
     
   </div>
 </template>
 
-<style>
-
-.container {
-  background-color: var(--bs-yellow-300);
-}
-.side-bar-logo {
-    height: var(--bs-app-header-height);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    flex-shrink: 0;
-}
+<style lang="scss">
+//@import "@/assets/styles/my-component-styles.scss";
 </style>

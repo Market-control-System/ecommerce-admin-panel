@@ -1,0 +1,17 @@
+//@import 'bootstrap/scss/bootstrap';
+//@import '_mixins';
+.side-bar-logo {
+    @include flex-center;
+    @include logo-left;
+    @extend .border-success;
+    @extend .border-opacity-75;
+    @extend .border-bottom;
+    //@include box-border("primary");
+    //background-color: theme-colors(primary-color);
+    /*height: var(--bs-app-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    flex-shrink: 0; */
+}
