@@ -13,7 +13,7 @@ const authenticate = async (phoneNumber, passwordText) => {
   const query = 'SELECT * FROM users WHERE phoneNumber = ?';
 
   try {
-    const rows = await executeQuery(query, [phoneNumber]);
+    const rows = await executeQuery('panel', query, [phoneNumber]);
 
     if (rows.length === 0 ) {
       result.err = true;
