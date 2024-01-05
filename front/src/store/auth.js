@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import router from '@/router';
 import { sendLogin } from '@/api-service/auth-service.js';
 import { useErrorStore } from './error';
+import { useTokenStore } from './token';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -11,6 +12,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(login, password) {
       const errorStore = useErrorStore();
+      const tokenStore = useTokenStore();
       // логика для входа
       //this.isAuthenticated = true;
       try {
@@ -19,9 +21,8 @@ export const useAuthStore = defineStore('auth', {
           // Обработка ответа, например, сохранение токена аутентификации
           if (!response.error){
               //console.log('god login');
-              localStorage.setItem('authToken', response.data.token);
-              localStorage.setItem('userData', JSON.stringify(response.data.user));
-              this.user = response.data.user;
+              tokenStore.setToken(response.data.token);
+              this.setUserData(response.data.user);
               this.isAuthenticated = true;
               router.push('/'); 
           } else {
@@ -41,6 +42,10 @@ export const useAuthStore = defineStore('auth', {
       this.isAuthenticated = false;
       localStorage.removeItem('authToken'); 
       router.push('/login');
-    }
+    },
+    setUserData(userData) { // устанавливаем начальные данные пользователя
+      localStorage.setItem('userData', JSON.stringify(userData));
+      this.user = userData;
+    },
   }
 });
