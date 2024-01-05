@@ -1,5 +1,5 @@
 import authModul from '../models/authModel.js';
-import tokenGenerator from '../utils/tokenGenerator.js';
+import tokenUtil from '../utils/tokenGenerator.js';
 
 const result = {
     error: true,
@@ -13,7 +13,7 @@ const login = async (req, res) => {
       //console.log('AUTH login - ', phoneNumber, ' | Pass - ', password);
       const user = await authModul.authenticate(phoneNumber, password);
       if (!user.err) {
-          const token = await tokenGenerator.generate(user.data);
+          const token = await tokenUtil.generate(user.data);
           if (!token.err) {
               result.error = false;
               result.msg = '';
