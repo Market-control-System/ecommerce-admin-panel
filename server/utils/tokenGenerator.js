@@ -39,6 +39,9 @@ const verifyToken = (req, res, next) => {
     console.log('user id - ', req.user);
     next();
   } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      return res.send({ err: true, msg: 'Token expired', tokenExpired: true });
+    }
     return res.send({err:true, msg:'Invalid Token'});
   }
 };
