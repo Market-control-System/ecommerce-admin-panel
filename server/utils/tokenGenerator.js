@@ -3,6 +3,7 @@ import { configAuth } from '../inc/configService.js';
 
 const generate = async (data) => {
   try {
+    //data = { id, role, userName, dateCreate, dateUpdate, block }
     const token = jwt.sign(
       data, 
       configAuth.secret_key,
@@ -16,23 +17,32 @@ const generate = async (data) => {
   }
 };
 
-const decode = async (token) => {
+const decodeToken = async (token) => {
   try {
-    const decoded = jwt.verify(token, configAuth.secret_key, (err, decoded) => {
-      if (err) {
-        return {err:true, msg:`Error in decode TOKEN. msg - ${err}`}
-      } else {
-        //  decoded.id и decoded.role
-        return {err:false, user:decoded}
-      }
-    });
-    
+    console.log('decoded token');
+    return jwt.verify(token, configAuth.secret_key);
   } catch (err) {
-    return {err:true, msg:`Error decode token - ${err}`}
+    throw new Error(`Error decode token - ${err}`);
   }
-}; 
-
-export default {
-  generate,
-  decode,
 };
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) {
+    console.log('error token');
+    return res.send({err:true, msg:'A token is required for authentication'});
+  }
+
+  try {
+    console.log('ver token ', token);
+    req.user = jwt.verify(token, configAuth.secret_key);
+    console.log('user id - ', req.user);
+    next();
+  } catch (err) {
+    return res.send({err:true, msg:'Invalid Token'});
+  }
+};
+
+const tokenUtil = { generate, verifyToken };
+
+export default tokenUtil;
