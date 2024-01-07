@@ -6,6 +6,7 @@ import { useTokenStore } from './token';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
+    nameLocalStorage: 'userData',
     isAuthenticated: false,
     user: null,
   }),
@@ -36,16 +37,29 @@ export const useAuthStore = defineStore('auth', {
           errorStore.msg   = `Login failed: ${error}`;
           errorStore.component = 'Auth store. Send Login';
       }
+
+      return true;
     },
     logout() {
       // логика для выхода
       this.isAuthenticated = false;
-      localStorage.removeItem('authToken'); 
-      router.push('/login');
+      this.user = null;
+      const tokenStore = useTokenStore();
+      tokenStore.clearToken();
     },
     setUserData(userData) { // устанавливаем начальные данные пользователя
-      localStorage.setItem('userData', JSON.stringify(userData));
+      localStorage.setItem(this.nameLocalStorage, JSON.stringify(userData));
       this.user = userData;
+      return true;
+    },
+    setUserDataFromLocalStorage(){
+      if (!localStorage.getItem(this.nameLocalStorage)){
+        return false;
+      }
+
+      this.user = JSON.parse(localStorage.getItem(this.nameLocalStorage));
+      this.isAuthenticated = true;
+      return true;
     },
   }
 });

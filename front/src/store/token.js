@@ -5,23 +5,43 @@ import router from '@/router';
 export const useTokenStore = defineStore('token', {
     state: () => ({
         token: null,
-        tokenExp: false, // токен просрочен
+        tokenExpEnd: null, // токен просрочен или отсутствует если true
     }),
     getters: {
-        isTokenExpired: (state) => state.tokenExp,
+        isTokenExpired: (state) => state.tokenExpEnd, //если получили от сервера что токен просрочен 
       },
     actions: {
-        setToken(newToken) {
+        async setToken(newToken) {
             this.token = newToken;
-            this.tokenExp = false; 
+            this.tokenExpEnd = false; 
             localStorage.setItem('authToken', newToken);
-          },
-        clearToken() {
+        },
+        async clearToken() {
             this.token = null;
-            this.tokenExp = true;
+            this.tokenExpEnd = true;
             localStorage.removeItem('authToken');
             router.push('/login');
-          },
+        },
+        async verifyToken() {
+            if (!localStorage.getItem('authToken')) {
+                // если токен НЕ существует
+                await this.clearToken();
+            }
+            // проверка срока действия токена
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const currentTime = Date.now() / 1000;
+
+                if (payload.exp < currentTime) {
+                    console.log('Токен истек');
+                    await this.clearToken();
+                } else {
+                    console.log('Токен действителен');
+                    await this.setToken(token);
+                }
+            }
+        },
     }
   });
   
