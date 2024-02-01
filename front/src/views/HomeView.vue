@@ -1,48 +1,15 @@
 <script setup>
-//import '../assets/styles/mainCarcas.scss';
-import { ref } from 'vue';
-import { useAuthStore } from '@/store/auth';
-import {getProductList} from '@/api-service/product-service.js';
-import ProductList from '@/components/products/ProductList.vue';
+// import '../assets/styles/mainCarcas.scss';
+import useUserStore from '@/stores/userStore';
 
-const authStore = useAuthStore();
-
-const exitBtn = () => {
-  authStore.logout();
-};
-
-let prList = ref([]);
-
-const loadProductClick = async () => {
-      const res = await getProductList('profitools', {filtr:'all'});
-      if (!res.err) {
-        prList.value = res.data;
-        console.log(prList.value);
-      } else {
-        console.log(res.err);
-      }
-}
-
+const userStore = useUserStore();
 </script>
 
 <template>
-  <div class="container ">
-    <button class="btn btn-primary" @click="exitBtn">Exit</button>
-    <button class="btn btn-danger" @click="loadProductClick">Load product</button>
-    <div class="row">
-      <div class="col-3">
-        <div class="left-menu">
-          <div class="side-bar-logo">Admin Panel</div>
-
-        </div>
-      </div>
-      <div class="col-9">
-        {{ authStore.user }}
-          <ProductList :productList = "prList"/>
-      </div>
+    <div class="container ">
+        Count project -
+        {{ userStore.userCountProjects }}
     </div>
-    
-  </div>
 </template>
 
 <style lang="scss">

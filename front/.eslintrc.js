@@ -1,35 +1,20 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true
+    root: true,
+    env: {
+      node: true,
     },
-    "globals": {
-        "process": "readonly"
-      },
-    "extends": [
-        "eslint:recommended",
-        "plugin:vue/vue3-essential"
+    extends: [
+      'plugin:vue/vue3-essential',
+      '@vue/airbnb',
     ],
-    "overrides": [
-        {
-            "env": {
-                "node": true
-            },
-            "files": [
-                ".eslintrc.{js,cjs}"
-            ],
-            "parserOptions": {
-                "sourceType": "script"
-            }
-        }
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+    parserOptions: {
+      parser: '@babel/eslint-parser',
     },
-    "plugins": [
-        "vue"
-    ],
-    "rules": {
-    }
-}
+    rules: {
+      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      "vuejs-accessibility/label-has-for": "off",
+      'indent': ['error', 4],
+    },
+  };
+  

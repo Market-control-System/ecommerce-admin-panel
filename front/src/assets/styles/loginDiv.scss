@@ -1,0 +1,6 @@
+.login-div {
+    width: 300px;
+    text-align: center;
+    padding: 50px;
+    @include box-border('danger'); // Использование миксина
+}

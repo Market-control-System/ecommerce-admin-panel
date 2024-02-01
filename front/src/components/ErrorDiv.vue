@@ -43,4 +43,4 @@ watch(() => errorStore.error, (newErrorValue) => {
             </div>
         </div>
     </div>
-</template>
+</template>@/stores/error

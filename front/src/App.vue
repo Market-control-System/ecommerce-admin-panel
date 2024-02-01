@@ -1,40 +1,21 @@
 <script setup>
 import { onMounted } from 'vue';
-import ErrorDiv from './components/ErrorDiv.vue';
-import { useAuthStore } from './store/auth';
-import { useTokenStore } from './store/token';
+import AlertAllInfoModal from '@/components/ModalWindow/AlertAllInfoModalWindow.vue';
+import useAlertModalStore from './stores/alertModalStore';
+import useAuthStore from './stores/authStore';
 
+onMounted(async () => {
+    const authStore = useAuthStore();
+    const alertModalStore = useAlertModalStore();
 
-const authStore = useAuthStore();
-const tokenStore = useTokenStore();
-
-
-const savedUserData = localStorage.getItem('userData');
-
-if (localStorage.getItem('authToken') && savedUserData) {
-  authStore.isAuthenticated = true;
-  authStore.user = JSON.parse(savedUserData);
-}
-onMounted( ()=>{
-  tokenStore.verifyToken()
-  .then(()=>{
-    // проверка наличия данніх юзера
-    if (!authStore.user || !authStore.isAuthenticated) {
-      if (!authStore.setUserDataFromLocalStorage()) {
-        tokenStore.clearToken();
-      }
+    const resAuth = await authStore.initializeUser();
+    if (resAuth.err) {
+        alertModalStore.openModal(resAuth.message, resAuth.status);
     }
-  })
-  .catch( ()=> {
-    tokenStore.clearToken();
-  })
 });
 </script>
 
 <template>
-  <router-view/>
-  <ErrorDiv />
+    <router-view/>
+    <AlertAllInfoModal />
 </template>
-
-<style>
-</style>
