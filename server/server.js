@@ -3,7 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
-import 'dotenv/config';
+import { configServer } from './inc/configService.js';
+import { errorOperation } from './utils/errorOperation.js';
 
 const app = express();
 
@@ -16,7 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
 
-const PORT = process.env.PORT || 3000;
+app.use(errorOperation);
+
+const PORT = configServer.port || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}  IP - ${process.env.DB_HOST}`);
 });

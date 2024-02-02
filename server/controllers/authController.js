@@ -1,45 +1,32 @@
-import authModul from '../models/authModel.js';
-import tokenUtil from '../utils/tokenGenerator.js';
+/**
+ * контроллер авторизации
+ * Авторизация - получение токена
+ * Регистрация - возможно будет позже
+ */
+import validUserData from '../validator/validUserData.js';
+import serviceAuth from '../services/user/authService.js';
 
-const result = {
-    error: true,
-    msg: 'Error in init',
-    data: null,
-};
+const login = async (req, res, next) => {
+    try {
+        // определить входные данные
+        const { login, password } = req.body;
 
-const login = async (req, res) => {
-  try {
-      const { phoneNumber, password } = req.body;
-      //console.log('AUTH login - ', phoneNumber, ' | Pass - ', password);
-      const user = await authModul.authenticate(phoneNumber, password);
-      if (!user.err) {
-          const token = await tokenUtil.generate(user.data);
-          if (!token.err) {
-              result.error = false;
-              result.msg = '';
-              result.data  = {
-                token:token.token,
-                user:user.data,
-              }
-          } else {
-              result.error = true;
-              result.msg += `Error in TOKEN generate. MSG - ${token.msg}`;
-              result.data = null;
-          }
-      
-          return res.json(result);
-      } else {
-          result.error = true;
-          result.msg = 'Authentication failed. ' + user.msg;
-          result.data = null;
-          return res.json(result);
-      }
-  } catch (error) {
-      result.error = true;
-      result.msg = `Internal server error. Msg = ${error}`;
-      result.data = null;
-      return res.json(result);
-  }
+        // валидация данных
+        if (!validUserData.userPassword(password) || !validUserData.userPhoneNumber(login)){
+            const error = new Error('Login or Password - not in current format');
+            error.status = 401;
+            return next(error);
+        }
+        // вызов сервиса
+        const result = await serviceAuth.login(login, password);
+        // формирование данных для ответа на фронт
+        return res.status(200).json(result);
+    } catch (err) {
+        console.log('Error in login - ', err);
+        const error = new Error(err.message || "Internal server error");
+        error.status = error.status || 500;
+        return next(error);
+    };
 };
 
 export default {

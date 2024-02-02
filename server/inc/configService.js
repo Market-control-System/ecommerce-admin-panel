@@ -22,6 +22,16 @@ export const configDBPanel = {
     charset: 'utf8'
 };
 export const configAuth = {
-    secret_key: 'prKey',
+    secret_key: process.env.TOKEN_SECRET_KEY,
     expires_key: '10h',
+};
+
+export const configServer = {
+    port: process.env.PORT,
+};
+
+export const validConfig = {
+    user: {
+        validLoginRgp: /^\d{3}-\d{3}-\d{2}-\d{2}$/, // 097-333-22-22
+    },
 };
