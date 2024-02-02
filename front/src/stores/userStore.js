@@ -7,36 +7,18 @@ import { defineStore } from 'pinia';
 const useUserStore = defineStore('user', {
     state: () => ({
         isUserAuth: false,
-        userInfo: {
-            userName: null,
-            userId: null,
-        },
-        userCountProjects: 0,
-        userCountTasks: 0,
+        userInfo: { },
     }),
 
     actions: {
-        setUserData({
-            userName,
-            userId,
-            countProjects,
-            countTasks,
-        }) {
-            this.userInfo.userId = userId;
-            this.userInfo.userName = userName;
-            this.userCountProjects = countProjects;
-            this.userCountTasks = countTasks;
+        setUserData(userInfo) {
+            this.userInfo = { ...userInfo };
             this.isUserAuth = true;
             return true;
         },
         clear() {
             this.isUserAuth = false;
-            this.userInfo = {
-                userName: null,
-                userId: null,
-            };
-            this.userCountProjects = 0;
-            this.userCountTasks = 0;
+            this.userInfo = { };
         },
     },
 });

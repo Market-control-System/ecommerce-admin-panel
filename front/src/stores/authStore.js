@@ -73,12 +73,7 @@ const useAuthStore = defineStore('auth', {
             tokenStore.setToken(resultLogin.res.token);
             localStorage.setItem(config.tokenLocalStorage, resultLogin.res.token);
 
-            const toUserInfo = {
-                userId: resultLogin.res.userInfo.userId,
-                userName: resultLogin.res.userInfo.userName,
-                countProjects: 0,
-                countTasks: 0,
-            };
+            const toUserInfo = { ...resultLogin.res.userInfo };
 
             userStore.setUserData(toUserInfo);
             localStorage.setItem(config.userInfoLocalStorage, JSON.stringify(toUserInfo));

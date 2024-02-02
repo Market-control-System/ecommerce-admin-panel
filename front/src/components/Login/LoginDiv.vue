@@ -11,7 +11,9 @@ import LoginForm from './LoginForm.vue';
 const router = useRouter();
 
 const loginEnd = (isLogin) => {
+    console.log('loginEND');
     if (isLogin) {
+        console.log('TRUE');
         router.push('/');
     }
 };
