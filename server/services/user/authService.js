@@ -25,7 +25,7 @@ const login = async (phoneNumber, password) => {
         if (tempUser.length === 0) {
             const error = new Error(`User whith login ${phoneNumber} - not found!`);
             error.debug = `User whith login ${phoneNumber} - not found! In model UserInfo -> findUserByLogin`;
-            error.status = '404';
+            error.status = 404;
             throw(error);
         }
 
