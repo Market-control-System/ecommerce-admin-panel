@@ -17,6 +17,8 @@ import tokenUtil from '../../utils/tokenGenerator.js';
 const login = async (phoneNumber, password) => {
     const userInfo = toReturn.dataFormt.userInfo();
     let token    = toReturn.dataFormt.token();
+    const tokeInfo = toReturn.dataFormt.tokenInfo();
+
     try {
         // find user in DB table
         const tempUser = await modelUserInfo.findUserByLogin(phoneNumber);
@@ -43,7 +45,10 @@ const login = async (phoneNumber, password) => {
         });
 
         // generate token 
-        token = await tokenUtil.generate(userInfo);
+        tokeInfo.block = userInfo.block;
+        tokeInfo.role = userInfo.role;
+        tokeInfo.userId = userInfo.userId;
+        token = await tokenUtil.generate(tokeInfo);
         
         // return result
         const result = toReturn.rout.login();

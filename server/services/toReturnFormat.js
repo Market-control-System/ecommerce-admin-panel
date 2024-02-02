@@ -11,6 +11,12 @@ const userInfo = () => ({
 
 const token = () => (null);
 
+const tokenInfo = () => ({
+    userId: null,
+    role: null,
+    block: null,
+});
+
 const loginUser = () => ({
     token: token(),
     userInfo: userInfo(),
@@ -20,6 +26,7 @@ const toReturn = {
     dataFormt: {
         userInfo,
         token,
+        tokenInfo,
     },
 
     rout: {
