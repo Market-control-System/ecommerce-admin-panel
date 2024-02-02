@@ -73,7 +73,7 @@ const sendLoginForm = async () => {
                 required>
         </div>
         <div class="mb-3">
-            <label for="login-password" class="form-label">Пароль</label>
+            <label for="login-password" class="form-label">Password</label>
             <input
                 type="password"
                 class="form-control"
