@@ -1,5 +1,5 @@
 export const errorOperation = (err, req, res, next) => {
-    console.error(err.debug); 
+    // console.error(err.debug); 
     // тут надо придумать логгирование - в файл или монгу?? 
     // err.toString();
     if (process.env.NODE_ENV === 'production') {

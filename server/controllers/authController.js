@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
         // формирование данных для ответа на фронт
         return res.status(200).json(result);
     } catch (err) {
-        console.log('Error in login - ', err);
+        // console.log('Error in login - ', err);
         const error = new Error(err.message || "Internal server error");
         error.status = error.status || 500;
         return next(error);
@@ -42,7 +42,7 @@ const readMyInfo = async (req, res, next) => {
         // формирование данных для ответа на фронт
         return res.status(200).json(result);
     } catch (err) {
-        console.log('Error in login - ', err);
+        //console.log('Error in login - ', err);
         const error = new Error(err.message || "Internal server error");
         error.status = error.status || 500;
         return next(error);
