@@ -111,7 +111,7 @@ const useAuthStore = defineStore('auth', {
                     // токена нет - на всякий случай удаляем возможныеданные
                     // console.log('NOT ISSET token - logout');
                     this.logout();
-                    return false;
+                    return { err: true };
                 }
                 // console.log('Token isset');
                 const tokenStore = useTokenStore();
@@ -122,7 +122,7 @@ const useAuthStore = defineStore('auth', {
                 if (!isTokenVerify) {
                     console.log('ERROR verify');
                     this.logout();
-                    return false;
+                    return { err: true };
                 }
 
                 // запрашиваем обновленные данные юзера с сервера
@@ -131,14 +131,17 @@ const useAuthStore = defineStore('auth', {
                     return tempUserInfo;
                 }
                 console.log('Return from server userInfo - ', tempUserInfo);
-                userStore.setUserData(tempUserInfo.res);
                 // устанавливаем данные в сторы
+                userStore.setUserData(tempUserInfo.res);
                 tokenStore.setToken(localToken);
-                return true;
+                // ставим обнавленный юзерИнфо
+                localStorage.removeItem(config.userInfoLocalStorage);
+                localStorage.setItem(config.userInfoLocalStorage, JSON.stringify(tempUserInfo));
+                return { err: false };
             } catch (error) {
                 console.log('CATCH ERROR - ', error);
                 this.logout();
-                return false;
+                return { err: true };
             }
         },
     },

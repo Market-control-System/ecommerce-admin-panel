@@ -64,7 +64,38 @@ const login = async (phoneNumber, password) => {
     }
 }
 
+
+const userInfoById = async (userId) => {
+    const userInfo = toReturn.rout.myInfo();
+
+    try {
+        // find user in DB table
+        const tempUser = await modelUserInfo.findUserById(userId);
+        if (tempUser.length === 0) {
+            const error = new Error(`Token is hucked! - user not found!`);
+            error.debug = `User whith id ${userId} - not found! findUserById`;
+            error.status = 404;
+            throw(error);
+        }
+
+        Object.keys(userInfo).forEach(key => {
+            if (tempUser[0].hasOwnProperty(key)) {
+                userInfo[key] = tempUser[0][key];
+            }
+        });
+
+        return userInfo;
+    } catch(err) {
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in authService / userInfo. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+        throw (error);
+    }
+}
+
+
 const serviceAuth = {
     login,
+    userInfoById,
 };
 export default serviceAuth;

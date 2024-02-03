@@ -31,6 +31,7 @@ const toReturn = {
 
     rout: {
         login: loginUser,
+        myInfo: userInfo,
     }
 };
 

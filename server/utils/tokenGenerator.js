@@ -24,7 +24,10 @@ const decodeToken = async (token) => {
         throw new Error(`Error decode token - ${err}`);
     }
 };
-
+/**
+ * midlware hповерки токена
+ * дешифруем данные в обьект user 
+ */
 const verifyToken = (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1];
     if (!token) {
@@ -33,9 +36,9 @@ const verifyToken = (req, res, next) => {
     }
 
     try {
-        console.log('ver token ', token);
+        //console.log('ver token ', token);
         req.user = jwt.verify(token, configAuth.secret_key);
-        console.log('user id - ', req.user);
+        //console.log('user id - ', req.user);
         next();
     } catch (err) {
         if (err.name === 'TokenExpiredError') {
