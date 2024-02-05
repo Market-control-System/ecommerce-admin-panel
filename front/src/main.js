@@ -1,6 +1,5 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import useAuthStore from './stores/authStore';
 import App from './App.vue';
 import router from './router';
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,10 +9,11 @@ const app = createApp(App);
 const pinia = createPinia();
 
 app.use(pinia);
+app.use(router);
 
-(async () => {
-    const authStore = useAuthStore();
-    await authStore.initializeUser();
-    app.use(router);
-    app.mount('#app');
-})();
+app.config.devtools = process.env.NODE_ENV === 'development';
+app.config.errorHandler = (err, vm, info) => {
+    console.error(err, info);
+};
+
+app.mount('#app');

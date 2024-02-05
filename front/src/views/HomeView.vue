@@ -1,17 +1,14 @@
 <script setup>
 // import '../assets/styles/mainCarcas.scss';
-import useUserStore from '@/stores/userStore';
 import NavBar from '@/components/NavBar/NavBar.vue';
+import useUserStore from '@/stores/userStore';
 
 const userStore = useUserStore();
 </script>
 
 <template>
     <NavBar />
-    <div class="container ">
-        Count project -
-        {{ userStore.userCountProjects }}
-    </div>
+    {{ userStore.userInfo }} fgdf gfdggf
 </template>
 
 <style lang="scss">

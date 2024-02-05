@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+// import AboutViewVue from '@/views/AboutView.vue';
 import useUserStore from '@/stores/userStore';
 import userRoutes from './userRoutes';
 import HomeView from '../views/HomeView.vue';
@@ -13,19 +14,20 @@ const routes = [
             requiresAuth: true,
             title: 'Система управления магазинами',
         },
-        beforeEnter: (to, from, next) => {
-            const userStore = useUserStore();
-            if (!userStore.isUserAuth) {
-                next({ name: 'login' }); // Перенаправление на страницу входа
-            } else {
-                next(); // Продолжить навигацию
-            }
-        },
     },
 ];
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL || 'http://localhost'),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    const userStore = useUserStore();
+    if (to.meta.requiresAuth && !userStore.isUserAuth) {
+        next({ name: 'login' });
+    } else {
+        next();
+    }
 });
 
 export default router;

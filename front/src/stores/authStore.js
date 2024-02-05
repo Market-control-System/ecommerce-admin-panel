@@ -111,7 +111,7 @@ const useAuthStore = defineStore('auth', {
                     // токена нет - на всякий случай удаляем возможныеданные
                     // console.log('NOT ISSET token - logout');
                     this.logout();
-                    return { err: true };
+                    return { err: true, message: 'Token is wrong' };
                 }
                 // console.log('Token isset');
                 const tokenStore = useTokenStore();
@@ -122,21 +122,23 @@ const useAuthStore = defineStore('auth', {
                 if (!isTokenVerify) {
                     console.log('ERROR verify');
                     this.logout();
-                    return { err: true };
+                    return { err: true, message: 'You token is not correct' };
                 }
 
-                // запрашиваем обновленные данные юзера с сервера
-                const tempUserInfo = await userApiController.getUserInfoByToken(localToken);
-                if (tempUserInfo.err) {
-                    return tempUserInfo;
-                }
-                console.log('Return from server userInfo - ', tempUserInfo);
+                // НЕ запрашиваем обновленные данные юзера с сервера
+                // const tempUserInfo = await userApiController.getUserInfoByToken(localToken);
+                // if (tempUserInfo.err) {
+                //    return tempUserInfo;
+                // }
+                // console.log('Return from server userInfo - ', tempUserInfo);
                 // устанавливаем данные в сторы
-                userStore.setUserData(tempUserInfo.res);
+                const localUserInfo = localStorage.getItem(config.userInfoLocalStorage);
+                if (!localUserInfo) {
+                    this.logout();
+                    return { err: true, message: 'Not isset User Info. Please Login' };
+                }
+                userStore.setUserData(JSON.parse(localUserInfo));
                 tokenStore.setToken(localToken);
-                // ставим обнавленный юзерИнфо
-                localStorage.removeItem(config.userInfoLocalStorage);
-                localStorage.setItem(config.userInfoLocalStorage, JSON.stringify(tempUserInfo));
                 return { err: false };
             } catch (error) {
                 console.log('CATCH ERROR - ', error);
