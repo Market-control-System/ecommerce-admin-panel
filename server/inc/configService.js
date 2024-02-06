@@ -1,4 +1,11 @@
 import 'dotenv/config';
+export const configDBProrab = {
+    host: process.env.DB_HOST_PRORABUA,
+    user: process.env.DB_USER_PRORABUA,
+    password: process.env.DB_PASSWORD_PRORABUA,
+    database: process.env.DB_NAME_PRORABUA,
+    charset: 'utf8'
+};
 export const configDBProfitools = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

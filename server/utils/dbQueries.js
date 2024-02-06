@@ -1,9 +1,10 @@
-import { poolDBPanel, poolDBMotoservice, poolDBProfitools } from './database.js';
+import { poolDBPanel, poolDBMotoservice, poolDBProfitools, poolDBProrab } from './database.js';
 
 const pools = {
     panel: poolDBPanel,
     profitools: poolDBProfitools,
-    motoservice: poolDBMotoservice
+    motoservice: poolDBMotoservice,
+    prorab: poolDBProrab,
 };
 
 export const executeQuery = async (dbName = 'panel', query, params) => {
