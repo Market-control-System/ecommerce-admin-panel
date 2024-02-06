@@ -7,7 +7,7 @@
  * - анализ ответа --- вывод ошибки
  * либо генерация события про успешную авторизацию и передача события родителю
  */
-import { ref, computed, defineEmits } from 'vue';
+import { ref, computed } from 'vue';
 import useAuthStore from '@/stores/authStore';
 import useAlertModalStore from '@/stores/alertModalStore';
 

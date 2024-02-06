@@ -1,7 +1,6 @@
 <script setup>
 // нкопка должна быть самодостаточна! Возвращает тип клика - login/logout
 // но данные о пользователе и авторизации берет сама из стора!
-import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
     isUserAuth: {

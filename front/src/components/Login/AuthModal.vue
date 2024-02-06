@@ -2,7 +2,7 @@
 /**
  * всплывающее окно для атворизации --- пока не используется
  */
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref } from 'vue';
 import LoginForm from './LoginForm.vue';
 
 const props = defineProps({
