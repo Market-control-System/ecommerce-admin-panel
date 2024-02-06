@@ -18,6 +18,8 @@ const getKurs = async () => {
             error.status = 404;
             throw(error);
         }
+        result.usd = temp[0].kurs_d;
+        result.eur = temp[0].kurs_e;
         return result;
     } catch(err) {
         const error = new Error(err.message || `Internal server error`);

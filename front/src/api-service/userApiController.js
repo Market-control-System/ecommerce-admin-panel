@@ -55,7 +55,6 @@ const getUserInfoByToken = async (token) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`, // Добавление токена в заголовки
     };
-
     try {
         const resultSend = await apiProjectServer.sendReq(path, method, headers, sendData);
         return resultSend;

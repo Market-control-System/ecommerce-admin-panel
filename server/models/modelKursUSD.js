@@ -7,7 +7,7 @@ import { executeQuery } from '../utils/dbQueries.js';
 
 const getKurs = async () => {
     const DBName = 'prorab';
-    const query = 'SELECT * FROM market_prodavec_inf WHERE id_user = 65';
+    const query = 'SELECT * FROM market_prodavec_info WHERE id_user = 65';
 
     try {
         const rows = await executeQuery(DBName, query, []);
