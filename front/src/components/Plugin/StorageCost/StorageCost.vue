@@ -23,12 +23,12 @@ const BTNUpdateCostClick = async () => {
 <template>
     <div>
         Стоимость склада
-        454 000 000
+        454 000 000<br />
         Profitools
         2435 000 000
         Motoservice
-        100 000 000
-        {{ props.token }}
+        100 000 000 <br />
+        <span style="display: none;">{{ props.token }}</span>
         <button class="btn btn-sm btn-primary" @click="BTNUpdateCostClick">
             Обновить
         </button>

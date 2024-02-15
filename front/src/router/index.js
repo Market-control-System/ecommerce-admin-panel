@@ -2,10 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import AboutViewVue from '@/views/AboutView.vue';
 import useUserStore from '@/stores/userStore';
 import userRoutes from './userRoutes';
+import xmlRoutes from './xmlRoutes';
 import HomeView from '../views/HomeView.vue';
 
 const routes = [
     ...userRoutes,
+    ...xmlRoutes,
     { // только если есть регистрация
         path: '/',
         name: 'home',

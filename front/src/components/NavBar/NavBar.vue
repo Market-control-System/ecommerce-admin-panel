@@ -38,13 +38,38 @@ const buttonExitClick = async (clickBTN) => {
                             role="button"
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Пользователи
+                                Пользователи
                         </router-link>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <router-link
+                            class="nav-link dropdown-toggle"
+                            to="#"
+                            role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                XML
+                        </router-link>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <router-link
+                                    class="dropdown-item"
+                                    to="/xml/rozetka">
+                                        Rozetka XML
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link
+                                    class="dropdown-item"
+                                    to="#">
+                                        Epicentr XML
+                                </router-link>
+                            </li>
                         </ul>
                     </li>
                 </ul>

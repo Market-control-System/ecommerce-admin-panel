@@ -23,9 +23,4 @@ const tokenStore = useTokenStore();
 </template>
 
 <style scoped>
-    .container-main {
-        padding-top: 70px;
-        margin-left:20px;
-        margin-right:20px;
-    }
 </style>
