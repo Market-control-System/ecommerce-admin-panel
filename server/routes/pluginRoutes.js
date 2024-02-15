@@ -7,5 +7,6 @@ import kursUSDController from '../controllers/pluginControllers/kursUSDControlle
 const router = Router();
 
 router.get('/get-kurs', tokenUtil.verifyToken, checkRole(9), kursUSDController.getKurs);
+router.get('/storage-cost', tokenUtil.verifyToken, checkRole(2), );
 
 export default router;
