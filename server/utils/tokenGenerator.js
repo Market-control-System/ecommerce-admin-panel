@@ -34,7 +34,7 @@ const verifyToken = (req, res, next) => {
         console.log('error token');
         throw new Error(`A token is required for authentication`);
     }
-
+    console.log('verify token ....');
     try {
         //console.log('ver token ', token);
         req.user = jwt.verify(token, configAuth.secret_key);

@@ -47,7 +47,7 @@ async function sendReq(url, method, headers, data) {
         });
         return res;
     } catch (error) {
-        console.log('FIRST ERROR - ', error);
+        console.log('FIRST !!! ERROR - ', error.message, ' Err status - ');
         const res = await errorApi({
             err: true,
             errStatus: 'api',

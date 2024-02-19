@@ -15,6 +15,7 @@ module.exports = {
       'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       "vuejs-accessibility/label-has-for": "off",
       'indent': ['error', 4],
+      "max-len": ["error", 150],
     },
   };
   

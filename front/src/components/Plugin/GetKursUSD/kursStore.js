@@ -8,7 +8,8 @@ const useKursStore = defineStore('kurs', {
         isLoad: true,
         err: false,
     }),
-
+    getters: {
+    },
     actions: {
         async getKurs(token) {
             const result = await kursUSDApiController.getKurs(token);
