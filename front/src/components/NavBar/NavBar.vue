@@ -3,10 +3,13 @@ import config from '@/config/config';
 import { useRouter } from 'vue-router';
 import useAuthStore from '@/stores/authStore';
 import useUserStore from '@/stores/userStore';
+import useTokenStore from '@/stores/tokenStore';
 import ButtonLogout from '../Login/ButtonLogout.vue';
+import GetKursToRow from '../Plugin/GetKursUSD/GetKursToRow.vue';
 
 const userStore = useUserStore();
 const authStore = useAuthStore();
+const tokenStore = useTokenStore();
 const router = useRouter();
 
 const buttonExitClick = async (clickBTN) => {
@@ -73,6 +76,9 @@ const buttonExitClick = async (clickBTN) => {
                         </ul>
                     </li>
                 </ul>
+            </div>
+            <div class="navbar-nav mr-auto">
+                <GetKursToRow :token="tokenStore.token" />
             </div>
             <div class="navbar-nav mr-auto">
                 {{userStore.userInfo.userName}} |

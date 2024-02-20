@@ -1,6 +1,7 @@
 <script setup>
 // страница для работы с XML Rozetka - доступен всем авторизованым юзерам
 import NavBar from '@/components/NavBar/NavBar.vue';
+import FormToXml from '@/components/XML/Product/FormToXml.vue';
 
 import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
 import useAlertModalStore from '@/stores/alertModalStore';
@@ -45,15 +46,20 @@ function getImageUrl(foto, product) {
             <div v-else>
                 <div v-for="product in xmlRoetkaStore.zp" :key="product.productInfo.id">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 zp-in-site">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <div>{{ product.productInfo.title.ru }}</div>
-                                    <div>{{ product.productInfo.title.ua }}</div>
+                                    <div>RU: {{ product.productInfo.title.ru }}</div>
+                                    <div>UA: {{ product.productInfo.title.ua }}</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div>{{ product.productInfo.category.ua }}</div>
-                                    <div>{{ product.productInfo.category.ru }}</div>
+                                    <div>UA: {{ product.productInfo.category.ua }}</div>
+                                    <a
+                                        class="link"
+                                        :href="`https://baseparts.com.ua/zapchast/zapchast${product.productInfo.id}.html`"
+                                        target="_blank">
+                                        Link
+                                    </a>
                                 </div>
                             </div>
                             <div class="row">
@@ -66,16 +72,27 @@ function getImageUrl(foto, product) {
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    Price: {{ product.productInfo.price.value }} грн.
-                                    <br /> Kurs store - {{ kursStore.usd }}
+                                    Price: {{ Math.round(product.productInfo.price.value * kursStore.usd) }} грн.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <small>Description RU</small>
+                                    <div class="descriptopn-zp">
+                                        {{ product.productInfo.description.ru }}
+                                    </div>
+                                    <hr />
+                                    <small>Description UA</small>
+                                    <div class="descriptopn-zp">
+                                        {{ product.productInfo.description.ua }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-
+                        <div class="col-md-8">
+                            <FormToXml />
                         </div>
                     </div>
-                    <div>{{ product.productInfo.title.ru }}</div>
                     <hr />
                 </div>
                 {{ xmlRoetkaStore.zp }}
@@ -90,5 +107,11 @@ function getImageUrl(foto, product) {
 }
 .blink {
     animation: blink 1s infinite;
+}
+.container-product {
+    padding-left: 10px;
+}
+.zp-in-site {
+    border-right: 1px solid green;
 }
 </style>
