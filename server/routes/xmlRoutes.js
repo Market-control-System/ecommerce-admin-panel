@@ -6,6 +6,7 @@ import xmlRozetkaControllers from '../controllers/xmlControllers/xmlRozetkaContr
 
 const router = Router();
 
-router.post('/get-product-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.getProduct);
+router.get('/get-product-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.getProduct);
+router.get('/get-cat-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.getCat);
 
 export default router;

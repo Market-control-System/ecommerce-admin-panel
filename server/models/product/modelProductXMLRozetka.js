@@ -46,10 +46,28 @@ const getFoto = async () => {
     }
 }
 
+const getCatRozetka = async () => {
+    const DBName = 'motoservice';
+    const query = `
+        SELECT *
+        FROM rozetka_xml_cat 
+        Order by idRow;
+    `;
+    try {
+        const rows = await executeQuery(DBName, query, []);
+        return rows;
+    } catch(err) {
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in model XML rozetka / getCatRozetka. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+    }
+}
+
 
 const modelProductXMLRozetka = {
     getProductList,
     getFoto,
+    getCatRozetka,
 };
 
 export default modelProductXMLRozetka;

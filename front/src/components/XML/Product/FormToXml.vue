@@ -40,8 +40,8 @@ const props = defineProps({
             </div>
             <div class="col-md-9">
                 <label :for="`catRozetka${props.id}`">Выбрать категорию</label><br />
-                <select v-for="cat in props.catList" :key="cat.id" :id="`catRozetka${props.id}`">
-                    <option :value="cat.id">
+                <select :id="`catRozetka${props.id}`" class="form-select" is-invalid>
+                    <option v-for="cat in props.catList" :key="cat.id" :value="cat.id">
                         {{ cat.ua }}
                     </option>
                 </select>

@@ -58,7 +58,7 @@ const getProductAll = async () => {
         //    error.status = 404;
         //    throw(error);
         // }
-        console.log(tempProd);
+        // console.log(tempProd);
         console.log('XML get product END ....');
         return result;
     } catch(err) {
@@ -69,8 +69,34 @@ const getProductAll = async () => {
     }
 };
 
+const getCatRozetka = async () => {
+    try {
+        console.log('XML get cat start ....');
+        const tempCat = await modelProductXMLRozetka.getCatRozetka();
+        
+        const result = tempCat.map(cat  => {
+            const temp = toReturnXML.rout.xmlCatRozetka();
+        
+            temp.id = cat.rz_id;
+            temp.ua = cat.zr_name;
+            temp.desc = cat.zr_desc;
+
+            return temp;
+        });
+        
+        return result;
+    } catch(err) {
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in get product XML rozetka. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+        throw (error);
+    }
+};
+
+
 const serviceXmlRozetka = {
     getProductAll,
+    getCatRozetka,
 };
 
 export default serviceXmlRozetka;

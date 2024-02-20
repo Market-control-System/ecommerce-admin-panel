@@ -67,14 +67,22 @@ const xmlRozetka = () => ({
     productInXML: productInXML(),
 });
 
+const xmlCatRozetka = () => ({
+    id: null,
+    ua: null,
+    desc: null,
+});
+
 const toReturnXML = {
     dataFormt: {
         productInfo: productInfo(),
         productInXML: productInXML(),
+        xmlCatRozetka: xmlCatRozetka(),
     },
 
     rout: {
         xmlRozetka: xmlRozetka,
+        xmlCatRozetka: xmlCatRozetka,
     }
 };
 

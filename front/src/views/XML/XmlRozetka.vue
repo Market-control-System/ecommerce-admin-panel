@@ -35,12 +35,12 @@ function getImageUrl(foto, product) {
     <NavBar />
     <div class="container-main">
         <div class="row">
-            <div class="col-md-2">XML Rozetka (Category -
+            <div class="col-md-3">XML Rozetka (Category -
                 <span v-if="xmlRoetkaStore.isLoad">load...</span>
                 <span v-else>{{ xmlRoetkaStore.catList.length }}</span>
                 )
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <button class="btn btn-outline-success" @click="loadProduct">
                     Показать все запчасти
                 </button>

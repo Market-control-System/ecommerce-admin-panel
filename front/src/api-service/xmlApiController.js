@@ -4,7 +4,7 @@ import apiProjectServer from './apiProjectServer';
 const getProductRozetka = async () => {
     const tokenStore = useTokenStore();
 
-    const method = 'POST';
+    const method = 'GET';
     const path = '/api/xml/get-product-rozetka';
     const sendData = {};
     const headers = {
@@ -24,7 +24,7 @@ const getProductRozetka = async () => {
 const getCatRozetka = async () => {
     const tokenStore = useTokenStore();
 
-    const method = 'POST';
+    const method = 'GET';
     const path = '/api/xml/get-cat-rozetka';
     const sendData = {};
     const headers = {
