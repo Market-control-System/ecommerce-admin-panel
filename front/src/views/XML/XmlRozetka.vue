@@ -13,9 +13,13 @@ const kursStore = useKursStore();
 
 const loadProduct = async () => {
     const rezult = await xmlRoetkaStore.loadProduct();
+    const rezultCat = await xmlRoetkaStore.loadCat();
 
     if (rezult.err) {
         alertModal.openModal(rezult.mesasge, rezult.statusCode);
+    }
+    if (rezultCat.err) {
+        alertModal.openModal(rezultCat.mesasge, rezultCat.statusCode);
     }
 };
 
@@ -31,7 +35,11 @@ function getImageUrl(foto, product) {
     <NavBar />
     <div class="container-main">
         <div class="row">
-            <div class="col-md-2">XML Rozetka</div>
+            <div class="col-md-2">XML Rozetka (Category -
+                <span v-if="xmlRoetkaStore.isLoad">load...</span>
+                <span v-else>{{ xmlRoetkaStore.catList.length }}</span>
+                )
+            </div>
             <div class="col-md-3">
                 <button class="btn btn-outline-success" @click="loadProduct">
                     Показать все запчасти
@@ -90,7 +98,10 @@ function getImageUrl(foto, product) {
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <FormToXml />
+                            <FormToXml
+                                :xml-info="product.productInXML"
+                                :cat-list="xmlRoetkaStore.catList"
+                                :id="product.productInfo.id"/>
                         </div>
                     </div>
                     <hr />

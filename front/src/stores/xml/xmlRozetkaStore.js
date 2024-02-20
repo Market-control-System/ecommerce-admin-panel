@@ -12,6 +12,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
     state: () => ({
         isLoad: false,
         zp: {},
+        catList: [],
     }),
     actions: {
         async loadProduct() {
@@ -29,6 +30,30 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
                 // анализируем ответ
                 // если все ок - возвращаем данные
                 this.zp = { ...result.res };
+                this.isLoad = false;
+                return true;
+            } catch (err) {
+                this.isLoad = false;
+                error.err = true;
+                error.mesasge = err.mesasge;
+                return error;
+            }
+        },
+        async loadCat() {
+            const error = await createErrorData();
+            try {
+                // делаем запрос на сервер
+                this.isLoad = true;
+                const result = await xmlApiController.getCatRozetka();
+                if (result.err) {
+                    error.err = true;
+                    error.mesasge = result.message;
+                    error.statusCode = result.status || 500;
+                    return error;
+                }
+                // анализируем ответ
+                // если все ок - возвращаем данные
+                this.catList = [...result.res];
                 this.isLoad = false;
                 return true;
             } catch (err) {
