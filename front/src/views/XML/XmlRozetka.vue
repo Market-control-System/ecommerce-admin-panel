@@ -101,7 +101,9 @@ function getImageUrl(foto, product) {
                             <FormToXml
                                 :xml-info="product.productInXML"
                                 :cat-list="xmlRoetkaStore.catList"
-                                :id="product.productInfo.id"/>
+                                :id="product.productInfo.id"
+                                :product="product.productInfo"
+                                :kurs="kursStore.usd"/>
                         </div>
                     </div>
                     <hr />
