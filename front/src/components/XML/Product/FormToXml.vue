@@ -1,7 +1,11 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
+import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
+import useAlertModalStore from '@/stores/alertModalStore';
 
 const activeSection = ref('category');
+const xmlStore = useXmlRozetkaStore();
+const alertStore = useAlertModalStore();
 
 const props = defineProps({
     xmlInfo: {
@@ -14,7 +18,7 @@ const props = defineProps({
     product: Object,
     catList: Array,
     id: Number,
-    kurs: Number,
+    kurs: String,
 });
 
 const selectedCategoryDesc = ref(''); // Описание выбранной категории
@@ -35,7 +39,7 @@ const selectedPhotos = ref([...props.product.foto.map((foto) => foto.url)]);
 
 // eslint-disable-next-line arrow-body-style
 const priceUsd = computed(() => {
-    return Math.round(props.product.price.value * props.kurs);
+    return Math.round(props.product.price.value * parseFloat(props.kurs));
 });
 
 // Функция для обработки изменения выбранной категории
@@ -58,7 +62,7 @@ function addParam() {
     if (!hasEmptyField) {
         params.value.push({ name: '', valueUK: '', valueUA: '' });
     } else {
-        alert('Заполните все поля перед добавлением нового параметра');
+        alertStore.openModal({ msg: 'Заполните все поля перед добавлением нового параметра' });
     }
 }
 // Удаление параметра по индексу
@@ -94,7 +98,7 @@ function getImageUrl(foto, product) {
     if (!foto.nameFile || foto.nameFile === 'nofoto.jpg') {
         return `//baseparts.com.ua/image/${foto.nameFile}`;
     }
-    return `//baseparts.com.ua/image/zp/${product.category.id}/${product.id}/t/${foto.nameFile}`;
+    return `//baseparts.com.ua/image/zp/${product.category.id}/${product.id}/${foto.nameFile}`;
 }
 
 /**
@@ -107,6 +111,33 @@ function getImageUrl(foto, product) {
  *      "description": { "ru": null, "ua": null },
  *      "foto": [] } } }
  */
+const updateData = async () => {
+    // Сбор данных из состояний
+    const dataToEmit = {
+        categoryName: selectedCategoryName.value,
+        productCatId: productCatId.value,
+        productId: productId.value,
+        productKod: productKod.value,
+        productVendor: productVendor.value,
+        productNameRU: productNameRU.value,
+        productNameUA: productNameUA.value,
+        productDescRU: prodyctDescRU.value,
+        productDescUA: prodyctDescUA.value,
+        params: params.value,
+        selectedPhotos: selectedPhotos.value,
+        priceUsd: priceUsd.value,
+    };
+    console.log(dataToEmit);
+
+    // Отправка собранных данных родительскому компоненту
+    const resultSend = await xmlStore.updateRowXls(dataToEmit);
+
+    if (!resultSend.err) {
+        console.log(resultSend.err);
+    } else {
+        alertStore.openModal(resultSend.msg || resultSend.message, resultSend.statusCode || 500);
+    }
+};
 </script>
 
 <template>
@@ -152,7 +183,7 @@ function getImageUrl(foto, product) {
                 </div>
             </div>
             <div class="col-md-4">
-                <button class="btn btn-outline-success">
+                <button class="btn btn-outline-success" @click="updateData">
                     Сохранить
                 </button>
             </div>
@@ -169,9 +200,8 @@ function getImageUrl(foto, product) {
             <div class="col-md-10">
                 <div id="cat-xml-form" v-if="activeSection === 'category'">
                     <div v-if="!props.xmlInfo.category.id">
-                        <label :for="`input-cat${props.id}`">категория на Розетке</label><br />
+                        <label :for="`input-cat-id`">категория на Розетке</label><br />
                         <select
-                            :id="`input-cat${props.id}`"
                             class="form-select"
                             name="input-cat-id"
                             is-invalid @change="handleCategoryChange"
@@ -184,7 +214,6 @@ function getImageUrl(foto, product) {
                         <input
                             type="hidden"
                             name="input-cat-name"
-                            id="input-cat-name"
                             v-model="selectedCategoryName">
                     </div>
                     <div v-else class="alert alert-success" role="alert">
@@ -199,14 +228,12 @@ function getImageUrl(foto, product) {
                         <label class="input-group-text">Id</label>
                         <input
                             type="text"
-                            id="input-id"
                             name="input-id"
                             class="form-control"
                             v-model="productId" disabled>
                         <span class="input-group-text">Код</span>
                         <input
                             type="text"
-                            id="input-kod"
                             name="input-kod"
                             class="form-control"
                             v-model="productKod" disabled>
@@ -215,14 +242,12 @@ function getImageUrl(foto, product) {
                         <label class="input-group-text">Price грн.</label>
                         <input
                             type="text"
-                            id="input-price"
                             name="input-price"
                             class="form-control"
                             v-model="priceUsd">
                         <span class="input-group-text">Vendor</span>
                         <input
                             type="text"
-                            id="input-kod"
                             name="input-kod"
                             class="form-control"
                             v-model="productVendor">
@@ -231,7 +256,6 @@ function getImageUrl(foto, product) {
                         <label class="input-group-text">Название RU</label>
                         <input
                             type="text"
-                            id="input-name-ru"
                             name="input-name-ru"
                             class="form-control"
                             v-model="productNameRU">
@@ -240,7 +264,6 @@ function getImageUrl(foto, product) {
                         <label class="input-group-text">Название UA</label>
                         <input
                             type="text"
-                            id="input-name-ua"
                             name="input-name-ua"
                             class="form-control"
                             v-model="productNameUA">
@@ -267,7 +290,6 @@ function getImageUrl(foto, product) {
                         <textarea
                             class="form-control"
                             aria-label="RU"
-                            id="input-description-ru"
                             v-model="prodyctDescRU">
                         </textarea>
                     </div>
@@ -277,7 +299,6 @@ function getImageUrl(foto, product) {
                         <textarea
                             class="form-control"
                             aria-label="UA"
-                            id="input-description-ua"
                             v-model="prodyctDescUA">
                         </textarea>
                     </div>

@@ -40,9 +40,30 @@ const getCatRozetka = async () => {
     }
 };
 
+// обновление / добавлениетовара в xml таблицу
+const updateRowXML = async (formatData) => {
+    const tokenStore = useTokenStore();
+
+    const method = 'POST';
+    const path = '/api/xml/update-xmlproduct-rozetka';
+    const sendData = { ...formatData };
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${tokenStore.token}`, // Добавление токена в заголовки
+    };
+
+    try {
+        const resultSend = await apiProjectServer.sendReq(path, method, headers, sendData);
+        return resultSend;
+    } catch (err) {
+        return { err: true, message: `Якась помилка в контроллері - ${err}` };
+    }
+};
+
 const xmlApiController = {
     getProductRozetka,
     getCatRozetka,
+    updateRowXML,
 };
 
 export default xmlApiController;
