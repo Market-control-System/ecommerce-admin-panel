@@ -72,12 +72,13 @@ function getImageUrl(foto, product) {
                             </div>
                             <div class="row">
                                 <div class="col-md-8">
-                                    <div v-for="foto in product.productInfo.foto"
+                                    <span v-for="foto in product.productInfo.foto"
+                                        class="foto-box"
                                         :key="foto.idFoto">
                                         <img :src="getImageUrl(foto, product)"
                                             class="img-thumbnail img-xml-prev"
                                             alt="...">
-                                    </div>
+                                </span>
                                 </div>
                                 <div class="col-md-4">
                                     Price: {{ Math.round(product.productInfo.price.value * kursStore.usd) }} грн.
@@ -126,5 +127,8 @@ function getImageUrl(foto, product) {
 }
 .zp-in-site {
     border-right: 1px solid green;
+}
+.foto-box {
+    margin: 5px;
 }
 </style>

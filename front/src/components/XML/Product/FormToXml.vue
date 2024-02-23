@@ -1,10 +1,16 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 const activeSection = ref('category');
 
 const props = defineProps({
-    xmlInfo: Object,
+    xmlInfo: {
+        type: Object,
+        default: () => ({
+            // Значения по умолчанию, если пропс не предоставлен
+            param: [],
+        }),
+    },
     product: Object,
     catList: Array,
     id: Number,
@@ -21,6 +27,11 @@ const productNameRU = ref(props.product.title.ru);
 const productNameUA = ref(props.product.title.ua);
 const prodyctDescRU = ref(props.product.description.ru);
 const prodyctDescUA = ref(props.product.description.ua);
+
+// Инициализируем params на основе xmlInfo.param, переданного через пропсы
+const params = ref(props.xmlInfo.param.length > 0 ? props.xmlInfo.param : [{ name: '', valueUK: '', valueUA: '' }]);
+// Инициализация состояния для хранения выбранных фото
+const selectedPhotos = ref([...props.product.foto.map((foto) => foto.url)]);
 
 // eslint-disable-next-line arrow-body-style
 const priceUsd = computed(() => {
@@ -39,6 +50,53 @@ const handleCategoryChange = (event) => {
 const setActiveSection = (section) => {
     activeSection.value = section;
 };
+// Функция для добавления нового параметра
+function addParam() {
+    // Проверяем, есть ли незаполненные параметры
+    const hasEmptyField = params.value.some((param) => !param.name || !param.valueUK || !param.valueUA);
+
+    if (!hasEmptyField) {
+        params.value.push({ name: '', valueUK: '', valueUA: '' });
+    } else {
+        alert('Заполните все поля перед добавлением нового параметра');
+    }
+}
+// Удаление параметра по индексу
+function removeParam(index) {
+    params.value.splice(index, 1);
+}
+// Следим за изменениями xmlInfo.param и обновляем params соответственно
+watch(() => props.xmlInfo.param, (newParams) => {
+    if (newParams.length > 0) {
+        params.value = newParams;
+    }
+}, { deep: true });
+
+// Функция для проверки, выбрано ли фото
+function isPhotoSelected(photoUrl) {
+    return selectedPhotos.value.includes(photoUrl);
+}
+
+// Функция для обработки клика по фото
+function togglePhotoSelection(fotoUrl) {
+    const index = selectedPhotos.value.indexOf(fotoUrl);
+    if (index > -1) {
+        // Если фото уже выбрано, удаляем его из массива
+        selectedPhotos.value.splice(index, 1);
+    } else {
+        // Иначе добавляем в массив
+        selectedPhotos.value.push(fotoUrl);
+    }
+}
+
+// Функция для получения URL фото
+function getImageUrl(foto, product) {
+    if (!foto.nameFile || foto.nameFile === 'nofoto.jpg') {
+        return `//baseparts.com.ua/image/${foto.nameFile}`;
+    }
+    return `//baseparts.com.ua/image/zp/${product.category.id}/${product.id}/t/${foto.nameFile}`;
+}
+
 /**
  *  "productInXML": { "kod": null, "id": null, "url": null, "vendor": null,
  *      "param": [ { "name": null, "valueUK": null, "valueRU": null } ],
@@ -189,7 +247,19 @@ const setActiveSection = (section) => {
                     </div>
                 </div>
                 <div id="foto-xml-form" v-if="activeSection === 'foto'">
-
+                    <span v-for="foto in props.product.foto"
+                        :key="foto.idFoto"
+                        class="foto-box"
+                        @click="togglePhotoSelection(getImageUrl(foto, props.product))"
+                        @keyup.enter="togglePhotoSelection(getImageUrl(foto, props.product))"
+                        tabindex="0"
+                        role="button"
+                        style="cursor: pointer;">
+                        <img :src="getImageUrl(foto, props.product)"
+                            class="img-thumbnail img-xml-prev"
+                            :class="{'selected-photo': isPhotoSelected(getImageUrl(foto, props.product))}"
+                            alt="...">
+                    </span>
                 </div>
                 <div id="desc-xml-form" v-if="activeSection === 'description'">
                     <div class="input-group">
@@ -213,29 +283,25 @@ const setActiveSection = (section) => {
                     </div>
                 </div>
                 <div id="params-xml-form" v-if="activeSection === 'params'">
-                    <div class="input-group">
+                    <small>Например: Країна виробник - Китай - Китай</small>
+                    <div class="input-group mb-3" v-for="(param, index) in params" :key="index">
                         <label class="input-group-text">Название</label>
-                        <input
-                            type="text"
-                            id="input-param-name1"
-                            name="input-param-name1"
-                            class="form-control"
-                            value="Країна виробник">
+                        <input type="text" class="form-control" v-model="param.name" placeholder="Название параметра">
                         <label class="input-group-text">UA</label>
-                        <input
-                            type="text"
-                            id="input-param-valuk1"
-                            name="input-param-valuk1"
-                            class="form-control"
-                            value="Китай">
+                        <input type="text" class="form-control" v-model="param.valueUK" placeholder="Значение (UK)">
                         <label class="input-group-text">RU</label>
-                        <input
-                            type="text"
-                            id="input-param-valru1"
-                            name="input-param-valru1"
-                            class="form-control"
-                            value="Китай">
+                        <input type="text" class="form-control" v-model="param.valueUA" placeholder="Значение (UA)">
+                        <button
+                            class="btn btn-outline-danger"
+                            @click="removeParam(index)">
+                            Удалить
+                        </button>
                     </div>
+                    <button
+                        class="btn btn-outline-warning"
+                        @click="addParam">
+                        Добавить параметр
+                    </button>
                 </div>
             </div>
         </div>
@@ -249,11 +315,14 @@ const setActiveSection = (section) => {
 .button-row {
     margin-bottom: 10px;
 }
-select, input {
-    background-color: black;
-    color: white;
+.foto-box {
+    margin: 5px;
 }
 .cat-xml-desc {
     margin: 10px;
+}
+.selected-photo {
+    border-color: green;
+    border-width: 2px;
 }
 </style>

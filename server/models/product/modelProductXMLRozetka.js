@@ -15,7 +15,7 @@ const getProductList = async () => {
         JOIN zapchasti_toType ztt ON zm.id = ztt.id
         JOIN zapchasti_typeList ztl ON ztt.idType = ztl.idType
         WHERE zm.dateCreate >= UNIX_TIMESTAMP( CURDATE( ) - INTERVAL 2 YEAR )
-        LIMIT 10;
+        LIMIT 50;
     `;
 
     try {
