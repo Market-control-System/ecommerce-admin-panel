@@ -8,5 +8,6 @@ const router = Router();
 
 router.get('/get-product-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.getProduct);
 router.get('/get-cat-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.getCat);
+router.post('/update-xmlproduct-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.addUpdateXmlRow);
 
 export default router;
