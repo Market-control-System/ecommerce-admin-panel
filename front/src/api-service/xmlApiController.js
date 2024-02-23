@@ -41,12 +41,12 @@ const getCatRozetka = async () => {
 };
 
 // обновление / добавлениетовара в xml таблицу
-const updateRowXML = async (formatData) => {
+const updateRowXML = async (formData) => {
     const tokenStore = useTokenStore();
 
     const method = 'POST';
     const path = '/api/xml/update-xmlproduct-rozetka';
-    const sendData = { ...formatData };
+    const sendData = { formData };
     const headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tokenStore.token}`, // Добавление токена в заголовки

@@ -33,7 +33,11 @@ const prodyctDescRU = ref(props.product.description.ru);
 const prodyctDescUA = ref(props.product.description.ua);
 
 // Инициализируем params на основе xmlInfo.param, переданного через пропсы
-const params = ref(props.xmlInfo.param.length > 0 ? props.xmlInfo.param : [{ name: '', valueUK: '', valueUA: '' }]);
+const params = ref(
+    Array.isArray(props.xmlInfo.param) && props.xmlInfo.param.length > 0
+        ? props.xmlInfo.param
+        : [],
+);
 // Инициализация состояния для хранения выбранных фото
 const selectedPhotos = ref([...props.product.foto.map((foto) => foto.url)]);
 
@@ -112,6 +116,11 @@ function getImageUrl(foto, product) {
  *      "foto": [] } } }
  */
 const updateData = async () => {
+    // подготовка данных - очистка массива
+    const filteredPhotos = selectedPhotos.value.filter(Boolean);
+    console.log('params - ', params.value);
+    const filteredParams = params.value.filter((item) => !Object.values(item).some((value) => value === null || value === ''));
+    console.log(' filter params - ', filteredParams);
     // Сбор данных из состояний
     const dataToEmit = {
         categoryName: selectedCategoryName.value,
@@ -124,7 +133,7 @@ const updateData = async () => {
         productDescRU: prodyctDescRU.value,
         productDescUA: prodyctDescUA.value,
         params: params.value,
-        selectedPhotos: selectedPhotos.value,
+        selectedPhotos: filteredPhotos,
         priceUsd: priceUsd.value,
     };
     console.log(dataToEmit);
@@ -309,9 +318,9 @@ const updateData = async () => {
                         <label class="input-group-text">Название</label>
                         <input type="text" class="form-control" v-model="param.name" placeholder="Название параметра">
                         <label class="input-group-text">UA</label>
-                        <input type="text" class="form-control" v-model="param.valueUK" placeholder="Значение (UK)">
+                        <input type="text" class="form-control" v-model="param.valueUK" placeholder="Значение (UA)">
                         <label class="input-group-text">RU</label>
-                        <input type="text" class="form-control" v-model="param.valueUA" placeholder="Значение (UA)">
+                        <input type="text" class="form-control" v-model="param.valueRU" placeholder="Значение (RU)">
                         <button
                             class="btn btn-outline-danger"
                             @click="removeParam(index)">
