@@ -42,3 +42,13 @@ export const validConfig = {
         validLoginRgp: /^\d{3}-\d{3}-\d{2}-\d{2}$/, // 097-333-22-22
     },
 };
+
+export const configXmlCreate = {
+    ftp: {
+        host: "37.139.29.24",
+        user: "prorabdp",
+        password: "3_f4Vhj=fYdsGF36-dj5N",
+        secure: false,
+    },
+    remoteFilePath: '/home/prorabdp/baseparts.com.ua/xml/test.xml',
+};

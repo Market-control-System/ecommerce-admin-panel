@@ -1,4 +1,5 @@
 import serviceXmlRozetka from '../../services/xml/serviceXmlRozetka.js';
+import seerviceXmlCreate from '../../services/xml/serviceXmlCreate.js';
 import validFormData from '../../validator/validXmlRowData.js';
 /**
  * контроллер работы с xml rozetka
@@ -55,9 +56,25 @@ const addUpdateXmlRow = async (req, res, next) => {
     };
 };
 
+// создание xml
+const createXmlRozetka = async (req, res, next) => {
+    try {
+        
+        const result = await seerviceXmlCreate.createXmlRozetka();
+        
+        return res.status(200).json(result);
+    } catch (err) {
+        // console.log('Error in login - ', err);
+        const error = new Error(err.message || "Internal server error");
+        error.status = error.status || 500;
+        return next(error);
+    };
+};
+
 export default {
     getProduct,
     getCat,
     addUpdateXmlRow,
+    createXmlRozetka,
 };
   

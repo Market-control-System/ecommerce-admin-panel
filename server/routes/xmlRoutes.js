@@ -10,4 +10,6 @@ router.get('/get-product-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozet
 router.get('/get-cat-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.getCat);
 router.post('/update-xmlproduct-rozetka', tokenUtil.verifyToken, checkRole(4), xmlRozetkaControllers.addUpdateXmlRow);
 
+router.get('/create-xml-rozetka', xmlRozetkaControllers.createXmlRozetka);
+
 export default router;
