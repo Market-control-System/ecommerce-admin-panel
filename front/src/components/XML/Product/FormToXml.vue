@@ -118,7 +118,7 @@ function getImageUrl(foto, product) {
 const updateData = async () => {
     // категория - если она есть - ставим ее тут
     if (props.xmlInfo.category.id !== '') {
-        selectedCategoryName.value = props.xmlInfo.category.id;
+        productCatId.value = props.xmlInfo.category.id;
         selectedCategoryName.value = props.xmlInfo.category.ua;
     }
     // подготовка данных - очистка массива
