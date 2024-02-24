@@ -61,10 +61,10 @@ const setActiveSection = (section) => {
 // Функция для добавления нового параметра
 function addParam() {
     // Проверяем, есть ли незаполненные параметры
-    const hasEmptyField = params.value.some((param) => !param.name || !param.valueUK || !param.valueUA);
+    const hasEmptyField = params.value.some((param) => !param.name || !param.valueUK || !param.valueRU);
 
     if (!hasEmptyField) {
-        params.value.push({ name: '', valueUK: '', valueUA: '' });
+        params.value.push({ name: '', valueUK: '', valueRU: '' });
     } else {
         alertStore.openModal({ msg: 'Заполните все поля перед добавлением нового параметра' });
     }
@@ -116,6 +116,11 @@ function getImageUrl(foto, product) {
  *      "foto": [] } } }
  */
 const updateData = async () => {
+    // категория - если она есть - ставим ее тут
+    if (props.xmlInfo.category.id !== '') {
+        selectedCategoryName.value = props.xmlInfo.category.id;
+        selectedCategoryName.value = props.xmlInfo.category.ua;
+    }
     // подготовка данных - очистка массива
     const filteredPhotos = selectedPhotos.value.filter(Boolean);
     console.log('params - ', params.value);
@@ -354,5 +359,9 @@ const updateData = async () => {
 .selected-photo {
     border-color: green;
     border-width: 2px;
+}
+select, input{
+    background-color: black;
+    color: white;
 }
 </style>

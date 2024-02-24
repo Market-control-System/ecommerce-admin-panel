@@ -41,9 +41,23 @@ const getProductAll = async () => {
             if (!product.kodXML) {
                 
             } else {
-                temp.productInXML.category.id = product.idType;
-                temp.productInXML.category.ru = product.titleType;
-                temp.productInXML.category.ua = product.titleTypeUA;
+                temp.productInXML.category.id = product.catId;
+                temp.productInXML.category.ua = product.catNameUA;
+
+                temp.productInXML.id = product.idXML;
+                temp.productInXML.kod = product.kodXML;
+                temp.productInXML.price = product.price;
+                temp.productInXML.vendor = product.vendor;
+
+                temp.productInXML.foto =product.picture.split(';');
+                
+                temp.productInXML.description.ru = product.description;
+                temp.productInXML.description.ua = product.description_ua;
+                
+                temp.productInXML.title.ru = product.name;
+                temp.productInXML.title.ua = product.name_ua;
+
+                temp.productInXML.param = JSON.parse(product.param);
             } 
             
 
@@ -93,10 +107,36 @@ const getCatRozetka = async () => {
     }
 };
 
+// обновление данных в товаре либо его создание
+const addUpdateXmlRow = async (formData) => {
+    try {
+        // отправляем данные в модель - поиск товара за айдишником
+
+        const isIsset = await modelProductXMLRozetka.searchProductById(formData.productId);
+        console.log('isIsset - ', isIsset);
+        if (isIsset.length === 0) {
+            // если нет - запуск модели по добавлению
+            const reInsert = await modelProductXMLRozetka.addXMLRow(formData);
+            console.log('add row - ', reInsert);
+        } else {
+            // если есть - запуск модели по обновлению
+            console.log(' update must be');
+        }
+        
+        return 'ok';
+    } catch(err) {
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in get product XML rozetka. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+        throw (error);
+    }
+};
+
 
 const serviceXmlRozetka = {
     getProductAll,
     getCatRozetka,
+    addUpdateXmlRow,
 };
 
 export default serviceXmlRozetka;

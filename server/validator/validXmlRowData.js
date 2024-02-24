@@ -35,6 +35,8 @@ const validFormData = async (formData) => {
     if (!formData.priceUsd || formData.priceUsd === 0) {
         return { err: true, msg: 'params is empty' };
     }
+
+    return { err: false };
 };
 
 export default validFormData;

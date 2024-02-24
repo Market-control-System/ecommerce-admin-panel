@@ -37,9 +37,14 @@ const addUpdateXmlRow = async (req, res, next) => {
         const formData = req.body.formData;
         // валидация
         console.log(formData);
-        const resValid = await validFormData(formData);
-        console.log('resalut valid - ', resValid);
-        //const result = await serviceXmlRozetka.getCatRozetka();
+        const resultValid = await validFormData(formData);
+        if (resultValid.err) {
+            const error = new Error(resultValid.msg);
+            error.status = 500;
+            return next(error);
+        }
+
+        const result = await serviceXmlRozetka.addUpdateXmlRow(formData);
         
         return res.status(200).json(result);
     } catch (err) {
