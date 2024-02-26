@@ -52,7 +52,7 @@ async function createXmlFile(catXml, offerXml, kursUSD) {
         offersEle.up();
 
         const xml = doc.end({ prettyPrint: true });
-        console.log(xml);
+        // console.log(xml);
 
         return xml;
     } catch (err) {

@@ -45,9 +45,9 @@ export const validConfig = {
 
 export const configXmlCreate = {
     ftp: {
-        host: "37.139.29.24",
-        user: "prorabdp",
-        password: "3_f4Vhj=fYdsGF36-dj5N",
+        host: process.env.HOST_FTP,
+        user: process.env.USER_FTP,
+        password: process.env.PASSWORD_FTP,
         secure: false,
     },
     remoteFilePath: '/home/prorabdp/baseparts.com.ua/xml/test.xml',

@@ -17,7 +17,7 @@ const createXmlRozetka = async () => {
         // console.log(categoryXml);
         // получаем данные про товары в таблице xml
         const offerXml =  await modelProductXMLRozetka.getXmlOffers();
-        console.log(' OFFERS  - ', offerXml);
+        // console.log(' OFFERS  - ', offerXml);
         // формируем обьект xml
         const xml = await xmlCreator.createXmlFile(categoryXml, offerXml, kursUSD);
         // сохраняем в файл
