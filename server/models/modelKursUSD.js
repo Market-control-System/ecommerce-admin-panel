@@ -11,7 +11,7 @@ const getKurs = async () => {
 
     try {
         const rows = await executeQuery(DBName, query, []);
-        console.log('KURS USD row - ', rows);
+        // console.log('KURS USD row - ', rows);
         return rows;
     } catch(err) {
         const error = new Error(err.message || `Internal server error`);

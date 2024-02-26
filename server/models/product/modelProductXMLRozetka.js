@@ -20,7 +20,27 @@ const getProductList = async () => {
 
     try {
         const rows = await executeQuery(DBName, query, []);
-        console.log(rows);
+        // console.log(rows);
+        return rows;
+    } catch(err) {
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in model XML rozetka / getproductList. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+    }
+};
+
+const getXmlOffers = async () => {
+    const DBName = 'motoservice';
+    const query = `
+        SELECT xml . *, zm.ostatok, zp.cenaOutBS
+        FROM rozetka_xml xml
+        JOIN zapchasti_price zp ON xml.idXML = zp.id
+        JOIN zapchasti_model zm ON xml.idXML = zm.id;
+    `;
+
+    try {
+        const rows = await executeQuery(DBName, query, []);
+        // console.log(rows);
         return rows;
     } catch(err) {
         const error = new Error(err.message || `Internal server error`);
@@ -106,6 +126,7 @@ const addXMLRow = async (D) => {
 const modelProductXMLRozetka = {
     getProductList,
     getFoto,
+    getXmlOffers,
     getCatRozetka,
     searchProductById,
     addXMLRow,

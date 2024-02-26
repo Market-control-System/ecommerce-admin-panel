@@ -51,4 +51,6 @@ export const configXmlCreate = {
         secure: false,
     },
     remoteFilePath: '/home/prorabdp/baseparts.com.ua/xml/test.xml',
+    name: 'BaseParts',
+    url: 'https://baseparts.com.ua',
 };

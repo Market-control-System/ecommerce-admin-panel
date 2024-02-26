@@ -1,53 +1,33 @@
 /**
  * создание XML
  */
-import { create } from 'xmlbuilder2'; // Убедитесь, что версия xmlbuilder2 поддерживает этот способ импорта
-import { Client } from 'basic-ftp';
-import { Readable } from 'stream';
-import { configXmlCreate } from '../../inc/configService.js';
+import modelProductXMLRozetka from '../../models/product/modelProductXMLRozetka.js';
+import modelKursUSD from '../../models/modelKursUSD.js';
+//import { configXmlCreate } from '../../inc/configService.js';
+import xmlCreator from '../../utils/xmlCreator.js';
 
 const createXmlRozetka = async () => {
-    const xmlData = {
-        root: {
-            child: [
-                { name: 'Child 1', value: 'Value 1' },
-                { name: 'Child 2', value: 'Value 2' }
-            ]
-        }
-    };
-
-    // Генерация XML
-    const xmlContent = create(xmlData).end({ prettyPrint: true });
-
-    // Создание FTP клиента и подключение
-    const client = new Client();
-
     try {
-        await client.access({
-            host: configXmlCreate.ftp.host,
-            user: configXmlCreate.ftp.user,
-            password: configXmlCreate.ftp.password,
-            secure: configXmlCreate.ftp.secure,
-        });
-
-        // Путь к файлу на FTP сервере
-        const remoteFilePath = configXmlCreate.remoteFilePath;
-
-        // Преобразование строки XML в поток
-        const xmlStream = new Readable();
-        xmlStream.push(xmlContent);
-        xmlStream.push(null); // Необходимо для сигнализации о конце потока
-
-        // Сохранение файла через FTP, используя поток
-        await client.uploadFrom(xmlStream, remoteFilePath);
-
-        // Отправка ответа клиенту
-        return 'XML file generated and uploaded successfully.';
+        // плучаем текущий курс
+        const tempkursUSD = await modelKursUSD.getKurs();
+        const kursUSD = parseFloat(tempkursUSD[0].kurs_d);
+        console.log('KURS USD - ', kursUSD);
+        // оплучаем данные про катгеории
+        const categoryXml = await modelProductXMLRozetka.getCatRozetka();
+        // console.log(categoryXml);
+        // получаем данные про товары в таблице xml
+        const offerXml =  await modelProductXMLRozetka.getXmlOffers();
+        console.log(' OFFERS  - ', offerXml);
+        // формируем обьект xml
+        const xml = await xmlCreator.createXmlFile(categoryXml, offerXml, kursUSD);
+        // сохраняем в файл
+        const result = await xmlCreator.uploadXmlToFtp(xml);
+        return result;
     } catch(err) {
-        console.log(err);
-        throw new Error(`Error during XML file generation or upload: ${err.message}`);
-    } finally {
-        client.close();
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in get product XML rozetka. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+        throw (error);
     }
 };
 
