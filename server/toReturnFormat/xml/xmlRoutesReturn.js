@@ -30,8 +30,7 @@ const categoryXML = () => ({
 
 const param = () => ([{
     name: null,
-    valueUK: null,
-    valueRU: null,
+    value: null,
 },]);
 
 const productInfo = () => ({

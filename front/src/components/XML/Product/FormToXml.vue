@@ -32,6 +32,9 @@ const productNameUA = ref(props.product.title.ua);
 const prodyctDescRU = ref(props.product.description.ru);
 const prodyctDescUA = ref(props.product.description.ua);
 
+const resultRowClass = ref('');
+const resultRowValue = ref('');
+
 // Инициализируем params на основе xmlInfo.param, переданного через пропсы
 const params = ref(
     Array.isArray(props.xmlInfo.param) && props.xmlInfo.param.length > 0
@@ -61,10 +64,10 @@ const setActiveSection = (section) => {
 // Функция для добавления нового параметра
 function addParam() {
     // Проверяем, есть ли незаполненные параметры
-    const hasEmptyField = params.value.some((param) => !param.name || !param.valueUK || !param.valueRU);
+    const hasEmptyField = params.value.some((param) => !param.name || !param.value);
 
     if (!hasEmptyField) {
-        params.value.push({ name: '', valueUK: '', valueRU: '' });
+        params.value.push({ name: '', value: '' });
     } else {
         alertStore.openModal({ msg: 'Заполните все поля перед добавлением нового параметра' });
     }
@@ -107,7 +110,7 @@ function getImageUrl(foto, product) {
 
 /**
  *  "productInXML": { "kod": null, "id": null, "url": null, "vendor": null,
- *      "param": [ { "name": null, "valueUK": null, "valueRU": null } ],
+ *      "param": [ { "name": null, "value": null } ],
  *      "available": false, "quantity_in_stock": null,
  *      "category": { "id": null, "ru": null, "ua": null, "rz": null },
  *      "price": { "value": null, "currency": "USD" },
@@ -147,8 +150,11 @@ const updateData = async () => {
     const resultSend = await xmlStore.updateRowXls(dataToEmit);
 
     if (!resultSend.err) {
-        console.log(resultSend.err);
+        resultRowClass.value = 'success-row';
+        resultRowValue.value = 'OK';
     } else {
+        resultRowClass.value = 'danger-row';
+        resultRowValue.value = 'ERROR';
         alertStore.openModal(resultSend.msg || resultSend.message, resultSend.statusCode || 500);
     }
 };
@@ -157,6 +163,10 @@ const updateData = async () => {
 <template>
     <div>
         <div class="row button-row">
+            <div class="result-row"
+                :class="resultRowClass">
+                {{ resultRowValue }}
+            </div>
             <div class="col-md-8">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                     <button
@@ -323,9 +333,7 @@ const updateData = async () => {
                         <label class="input-group-text">Название</label>
                         <input type="text" class="form-control" v-model="param.name" placeholder="Название параметра">
                         <label class="input-group-text">UA</label>
-                        <input type="text" class="form-control" v-model="param.valueUK" placeholder="Значение (UA)">
-                        <label class="input-group-text">RU</label>
-                        <input type="text" class="form-control" v-model="param.valueRU" placeholder="Значение (RU)">
+                        <input type="text" class="form-control" v-model="param.value" placeholder="Значение (UA)">
                         <button
                             class="btn btn-outline-danger"
                             @click="removeParam(index)">
@@ -362,6 +370,20 @@ const updateData = async () => {
 }
 select, input{
     background-color: black;
+    color: white;
+}
+.result-row {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    margin: 5px;
+}
+.success-row {
+    background-color: green;
+    color: white;
+}
+.danger-row {
+    background-color: brown;
     color: white;
 }
 </style>

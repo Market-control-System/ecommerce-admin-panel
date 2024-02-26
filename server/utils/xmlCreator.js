@@ -19,7 +19,7 @@ async function createXmlFile(catXml, offerXml, kursUSD) {
         // Добавление категорий
         const categoriesEle = doc.ele('categories');
         catXml.forEach(cat => {
-            categoriesEle.ele('category', { id: cat.rz_id }).txt(cat.rz_name).up();
+            categoriesEle.ele('category', { id: cat.rz_id }).txt(cat.zr_name).up();
         });
         categoriesEle.up();
 
@@ -44,7 +44,7 @@ async function createXmlFile(catXml, offerXml, kursUSD) {
             offerEle.ele('description_ua').txt(offer.description_ua).up();
 
             JSON.parse(offer.param).forEach(param => {
-                offerEle.ele('param', { name: param.name }).txt(param.valueUK).up();
+                offerEle.ele('param', { name: param.name }).txt(param.value).up();
             });
 
             offerEle.up();
