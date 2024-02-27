@@ -1,5 +1,5 @@
 // работа с паролями
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const comparePassword = async (password, hash) => {
     try {
