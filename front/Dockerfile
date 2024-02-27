@@ -15,4 +15,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Новая команда для проверки
 RUN cat /etc/nginx/nginx.conf
 # docker build  -t sheff2000/ecommercefront:0.1 .
-# docker build --platform linux/arm64 -t sheff2000/ecommercefront:0.1 .
+# docker build --platform linux/amd64 -t sheff2000/ecommercefront:0.1 .
