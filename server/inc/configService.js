@@ -30,7 +30,7 @@ export const configDBPanel = {
 };
 export const configAuth = {
     secret_key: process.env.TOKEN_SECRET_KEY,
-    expires_key: '10h',
+    expires_key: '100h',
 };
 
 export const configServer = {
@@ -50,7 +50,7 @@ export const configXmlCreate = {
         password: process.env.PASSWORD_FTP,
         secure: false,
     },
-    remoteFilePath: '/home/prorabdp/baseparts.com.ua/xml/test.xml',
+    remoteFilePath: '/home/prorabdp/baseparts.com.ua/xml/rozetka.xml',
     name: 'BaseParts',
     url: 'https://baseparts.com.ua',
 };

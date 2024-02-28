@@ -25,6 +25,10 @@ CMD ["node", "server.js"]
 #docker push sheff2000/ecommerce-server:0.1 
 
 #docker build --platform=linux/amd64 -t <sheff2000/ecommerce-server:0.1>
+# -----------------------
+
 
 # docker build --platform linux/arm64/v8 -t sheff2000/ecommerce-server:0.1 .
+
+
 #docker run -d -p 3000:3000 --env-file /home/user/project/server.env sheff2000/ecommerce-server:0.1

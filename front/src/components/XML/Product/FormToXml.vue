@@ -103,9 +103,9 @@ function togglePhotoSelection(fotoUrl) {
 // Функция для получения URL фото
 function getImageUrl(foto, product) {
     if (!foto.nameFile || foto.nameFile === 'nofoto.jpg') {
-        return `//baseparts.com.ua/image/${foto.nameFile}`;
+        return `https://baseparts.com.ua/image/${foto.nameFile}`;
     }
-    return `//baseparts.com.ua/image/zp/${product.category.id}/${product.id}/${foto.nameFile}`;
+    return `https://baseparts.com.ua/image/zp/${product.category.id}/${product.id}/${foto.nameFile}`;
 }
 
 /**
@@ -118,6 +118,7 @@ function getImageUrl(foto, product) {
  *      "description": { "ru": null, "ua": null },
  *      "foto": [] } } }
  */
+// отправка данных формы - для создания или обновления данных
 const updateData = async () => {
     // категория - если она есть - ставим ее тут
     if (props.xmlInfo.category.id !== '' && props.xmlInfo.category.id) {
