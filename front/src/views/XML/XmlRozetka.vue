@@ -6,11 +6,9 @@ import ProductCatalogBox from '@/components/XML/Product/ProductCatalogBox.vue';
 
 import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
 import useAlertModalStore from '@/stores/alertModalStore';
-import useKursStore from '@/components/Plugin/GetKursUSD/kursStore';
 
 const xmlRoetkaStore = useXmlRozetkaStore();
 const alertModal = useAlertModalStore();
-const kursStore = useKursStore();
 
 const loadProduct = async () => {
     const rezult = await xmlRoetkaStore.loadProduct();
@@ -47,7 +45,7 @@ const loadProduct = async () => {
                 Загрузка данных
             </span>
             <div v-else>
-                <ProductCatalogBox :zp="xmlRoetkaStore.zp" :kursUSD="kursStore.usd"/>
+                <ProductCatalogBox />
             </div>
         </div>
     </div>

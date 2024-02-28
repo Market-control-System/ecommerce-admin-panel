@@ -11,10 +11,23 @@ import xmlApiController from '@/api-service/xmlApiController';
 const useXmlRozetkaStore = defineStore('xmlRozetka', {
     state: () => ({
         isLoad: false,
-        zp: {},
+        zp: [],
         catList: [],
+        currentPage: 1,
+        pageSize: 30,
     }),
+    getters: {
+        // Getter для фильтрации товаров по текущей странице
+        pagedProducts: (state) => {
+            const start = (state.currentPage - 1) * state.pageSize;
+            const end = start + state.pageSize;
+            return state.zp.slice(start, end);
+        },
+    },
     actions: {
+        setPage(page) {
+            this.currentPage = page;
+        },
         async loadProduct() {
             const error = await createErrorData();
             try {
@@ -29,7 +42,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
                 }
                 // анализируем ответ
                 // если все ок - возвращаем данные
-                this.zp = { ...result.res };
+                this.zp = [...result.res];
                 this.isLoad = false;
                 return true;
             } catch (err) {
