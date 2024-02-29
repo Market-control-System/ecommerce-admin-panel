@@ -44,9 +44,20 @@ async function createXmlFile(catXml, offerXml, kursUSD) {
             offerEle.ele('description_ua').txt(offer.description_ua).up();
 
             JSON.parse(offer.param).forEach(param => {
-                offerEle.ele('param', { name: param.name }).txt(param.value).up();
+                // Инициализация объекта атрибутов с обязательным атрибутом name
+                let attributes = { name: param.name };
+            
+                // Добавление paramid и valueid в объект атрибутов, если они существуют и не пусты
+                if (param.paramid) {
+                    attributes.paramid = param.paramid;
+                }
+                if (param.valueid) {
+                    attributes.valueid = param.valueid;
+                }
+            
+                // Создание элемента с атрибутами
+                offerEle.ele('param', attributes).txt(param.value).up();
             });
-
             offerEle.up();
         });
         offersEle.up();

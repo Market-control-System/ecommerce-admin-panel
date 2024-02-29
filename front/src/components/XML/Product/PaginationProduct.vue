@@ -36,3 +36,19 @@ const totalPages = computed(() => Math.ceil(xmlRozetkaStore.zp.length / xmlRozet
         </ul>
     </nav>
 </template>
+
+<style scoped>
+.page-link {
+  background-color: black;
+  color: white;
+}
+.active a{
+  background-color: white;
+  color: black;
+}
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>
