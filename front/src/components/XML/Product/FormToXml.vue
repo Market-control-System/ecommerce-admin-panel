@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
 import useAlertModalStore from '@/stores/alertModalStore';
+// import catParams from '@/config/params/catParams';
 
 const activeSection = ref('category');
 const xmlStore = useXmlRozetkaStore();
