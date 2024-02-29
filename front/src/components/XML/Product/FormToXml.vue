@@ -64,10 +64,16 @@ const setActiveSection = (section) => {
 // Функция для добавления нового параметра
 function addParam() {
     // Проверяем, есть ли незаполненные параметры
+    // <param name="Матеріал верху" paramid="38625" valueid="59090">Шкіра</param>
     const hasEmptyField = params.value.some((param) => !param.name || !param.value);
 
     if (!hasEmptyField) {
-        params.value.push({ name: '', value: '' });
+        params.value.push({
+            name: '',
+            value: '',
+            valueid: '',
+            paramid: '',
+        });
     } else {
         alertStore.openModal({ msg: 'Заполните все поля перед добавлением нового параметра' });
     }
