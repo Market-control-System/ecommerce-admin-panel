@@ -5,15 +5,13 @@ import param202362 from './param202362';
 import param202368 from './param202368';
 
 const catParams = {
-    catListParams: { // Тросы и ремни на мотоблок
-        c4657638: {
-            param202182,
-            param202188,
-            param202194,
-            param202362,
-            param202368,
-        },
-    },
+    c4657638: [ // Тросы и ремни на мотоблок
+        param202182,
+        param202188,
+        param202194,
+        param202362,
+        param202368,
+    ],
 };
 
 export default catParams;

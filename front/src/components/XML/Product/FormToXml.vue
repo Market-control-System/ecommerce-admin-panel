@@ -2,7 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
 import useAlertModalStore from '@/stores/alertModalStore';
-// import catParams from '@/config/params/catParams';
+import catParams from '@/config/params/catParams';
 
 const activeSection = ref('category');
 const xmlStore = useXmlRozetkaStore();
@@ -36,6 +36,8 @@ const prodyctDescUA = ref(props.product.description.ua);
 const resultRowClass = ref('');
 const resultRowValue = ref('');
 
+const paramsFromCat = ref([]);
+
 // Инициализируем params на основе xmlInfo.param, переданного через пропсы
 const params = ref(
     Array.isArray(props.xmlInfo.param) && props.xmlInfo.param.length > 0
@@ -56,6 +58,8 @@ const handleCategoryChange = (event) => {
     const selectedCategory = props.catList.find((cat) => cat.id === selectedId);
     selectedCategoryDesc.value = selectedCategory ? selectedCategory.desc : ''; // Обновляем описание
     selectedCategoryName.value = selectedCategory ? selectedCategory.ua : '';
+    // загружаем новый набор параметров для выбранной категории
+    paramsFromCat.value = [...catParams[selectedId]];
 };
 
 // Функция для изменения активного раздела
@@ -353,6 +357,22 @@ const updateData = async () => {
                         @click="addParam">
                         Добавить параметр
                     </button>
+                    <div>
+                        <div v-for="param in paramsFromCat" :key="param.paramid">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text">параметр</label>
+                                <input type="text" class="form-control" v-model="param.name">
+                                <label class="input-group-text">код</label>
+                                <input type="text" class="form-control" v-model="param.paramid">
+                            </div>
+                            <label class="input-group-text">Значение</label>
+                            <select v-if="param.type === 'ComboBox'" class="form-control">
+                                <option v-for="option in param.value" :key="option.valueid" :value="option.valueid">
+                                    {{ option.value }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
