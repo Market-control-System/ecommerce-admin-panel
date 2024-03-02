@@ -12,6 +12,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
     state: () => ({
         isLoad: false,
         zp: [],
+        zpOrigin: [],
         catList: [],
         currentPage: 1,
         pageSize: 30,
@@ -43,6 +44,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
                 // анализируем ответ
                 // если все ок - возвращаем данные
                 this.zp = [...result.res];
+                this.zpOrigin = [...result.res];
                 this.isLoad = false;
                 return true;
             } catch (err) {
@@ -51,6 +53,17 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
                 error.mesasge = err.mesasge;
                 return error;
             }
+        },
+        async filtrType(typeId) {
+            // фильтруем список товаров по типу запчасти
+            this.currentPage = 1;
+            if (typeId === 0) {
+                this.zp = [...this.zpOrigin];
+                return true;
+            }
+
+            this.zp = this.zpOrigin.filter((item) => item.productInfo.category.id === typeId);
+            return true;
         },
         async loadCat() {
             const error = await createErrorData();

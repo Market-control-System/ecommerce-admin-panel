@@ -48,6 +48,8 @@ function getImageUrl(foto, product) {
                 </div>
                 <div class="col-md-4">
                     Price: {{ Math.round(props.productInfo.price.value * kursStore.usd) }} грн.
+                    <br />
+                    Остаток: {{ productInfo.ostatok }} шт.
                 </div>
             </div>
             <div class="row">

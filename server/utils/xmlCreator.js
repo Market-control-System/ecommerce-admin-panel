@@ -67,7 +67,7 @@ async function createXmlFile(catXml, offerXml, kursUSD) {
 
         return xml;
     } catch (err) {
-        console.error('ERROR - ', err);
+        console.error('ERROR CREATE XML - ', err);
         throw new Error('Failed to create XML');
     }
 };

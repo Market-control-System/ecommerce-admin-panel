@@ -3,6 +3,7 @@
 import NavBar from '@/components/NavBar/NavBar.vue';
 // import FormToXml from '@/components/XML/Product/FormToXml.vue';
 import ProductCatalogBox from '@/components/XML/Product/ProductCatalogBox.vue';
+import SelectType from '@/components/products/FiltrBTN/SelectType.vue';
 
 import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
 import useAlertModalStore from '@/stores/alertModalStore';
@@ -22,21 +23,30 @@ const loadProduct = async () => {
     }
 };
 
+async function updateFiltrSelectType(newType) {
+    // console.log('Select new type ', newType);
+    await xmlRoetkaStore.filtrType(parseInt(newType, 10));
+}
+
 </script>
 
 <template>
     <NavBar />
     <div class="container-main">
         <div class="row">
-            <div class="col-md-3">XML Rozetka (Category -
+            <div class="col-md-3">XML Rozetka (Cat. -
                 <span v-if="xmlRoetkaStore.isLoad">load...</span>
-                <span v-else>{{ xmlRoetkaStore.catList.length }}</span>
-                )
+                <span v-else> {{ xmlRoetkaStore.catList.length }}</span>
+                Product -
+                <span v-if="!xmlRoetkaStore.isLoad"> {{ xmlRoetkaStore.zp.length }}</span>)
             </div>
             <div class="col-md-2">
                 <button class="btn btn-outline-success" @click="loadProduct">
                     Показать все запчасти
                 </button>
+            </div>
+            <div class="col-md-2">
+                <SelectType @update:selected-type="updateFiltrSelectType"/>
             </div>
         </div>
         <hr />
