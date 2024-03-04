@@ -14,7 +14,7 @@ function timeoutPromise(ms, error) {
 
 async function sendReq(url, method, headers, data) {
     try {
-        console.log('API - url ', url, ' | method - ', method, ' | data - ', data, ' | headers - ', headers);
+        // console.log('API - url ', url, ' | method - ', method, ' | data - ', data, ' | headers - ', headers);
         let fetchPromise;
         if (method === 'GET') {
             fetchPromise = await fetch(`${BASE_SERVER_URL}${url}`, {

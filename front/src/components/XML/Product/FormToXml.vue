@@ -28,8 +28,8 @@ const productCatId = ref('');
 const productId = ref(props.product.id);
 const productKod = ref(props.product.kod);
 const productVendor = ref('Без бренду');
-const productNameRU = ref(props.product.title.ru);
-const productNameUA = ref(props.product.title.ua);
+const productNameRU = ref(`${props.product.title.ru} ${props.product.kod}`);
+const productNameUA = ref(`${props.product.title.ua} ${props.product.kod}`);
 const prodyctDescRU = ref(props.product.description.ru);
 const prodyctDescUA = ref(props.product.description.ua);
 
@@ -67,12 +67,19 @@ const setActiveSection = (section) => {
     activeSection.value = section;
 };
 // Функция для добавления нового параметра
-function addParam() {
+function addParam(tmp) {
     // Проверяем, есть ли незаполненные параметры
-    // <param name="Матеріал верху" paramid="38625" valueid="59090">Шкіра</param>
-    const hasEmptyField = params.value.some((param) => !param.name || !param.value);
-
-    if (!hasEmptyField) {
+    // const hasEmptyField = params.value.some((param) => !param.name || !param.value);
+    /* if (!hasEmptyField) {
+    *
+    * } else {
+    *    alertStore.openModal({ msg: 'Заполните все поля перед добавлением нового параметра' });
+    * }
+    */
+    // console.log('TMP - ', tmp);
+    // console.log('TMP svalue - ', tmp.svalue, ' | tmp value - ', tmp.value.find((item) => item.valueid === tmp.svalue).value);
+    // alertStore.openModal(`Добавить параметр tmp - ${tmp.svalue}`);
+    if (!tmp.paramid) {
         params.value.push({
             name: '',
             value: '',
@@ -80,7 +87,22 @@ function addParam() {
             paramid: '',
         });
     } else {
-        alertStore.openModal({ msg: 'Заполните все поля перед добавлением нового параметра' });
+        if (tmp.type === 'ComboBox') {
+            params.value.push({
+                name: tmp.name,
+                value: tmp.value.find((item) => item.valueid === tmp.svalue).value,
+                valueid: tmp.svalue,
+                paramid: tmp.paramid,
+            });
+        }
+        if (tmp.type === 'Decimal') {
+            params.value.push({
+                name: tmp.name,
+                value: tmp.value,
+                valueid: null,
+                paramid: tmp.paramid,
+            });
+        }
     }
 }
 // Удаление параметра по индексу
@@ -289,6 +311,9 @@ const updateData = async () => {
                             v-model="productVendor">
                     </div>
                     <div class="input-group mb-3">
+                        <small>
+                            Тип товару - Бренд (якщо є) - Модель - Розмір (якщо має значення) - Колір (якщо має значення) - Артикул (якщо є)
+                        </small>
                         <label class="input-group-text">Название RU</label>
                         <input
                             type="text"
@@ -341,36 +366,49 @@ const updateData = async () => {
                 </div>
                 <div id="params-xml-form" v-if="activeSection === 'params'">
                     <small>Например: Країна виробник - Китай - Китай</small>
-                    <div class="input-group mb-3" v-for="(param, index) in params" :key="index">
-                        <label class="input-group-text">Название</label>
-                        <input type="text" class="form-control" v-model="param.name" placeholder="Название параметра">
-                        <label class="input-group-text">UA</label>
-                        <input type="text" class="form-control" v-model="param.value" placeholder="Значение (UA)">
-                        <button
-                            class="btn btn-outline-danger"
-                            @click="removeParam(index)">
-                            Удалить
-                        </button>
+                    <div v-if="params.length > 0">
+                        <div
+                            class="input-group mb-3"
+                            v-for="(param, index) in params" :key="index">
+                            <label class="input-group-text">Название</label>
+                            <input type="text" class="form-control" v-model="param.name" placeholder="Название параметра">
+                            <label class="input-group-text">UA</label>
+                            <input type="text" class="form-control" v-model="param.value" placeholder="Значение (UA)">
+                            <button
+                                class="btn btn-outline-danger"
+                                @click="removeParam(index)">
+                                Удалить
+                            </button>
+                        </div>
                     </div>
                     <button
-                        class="btn btn-outline-warning"
+                        class="btn btn-sm btn-outline-warning"
                         @click="addParam">
                         Добавить параметр
                     </button>
-                    <div>
+                    <div class="add-param-box">
                         <div v-for="param in paramsFromCat" :key="param.paramid">
                             <div class="input-group mb-3">
                                 <label class="input-group-text">параметр</label>
                                 <input type="text" class="form-control" v-model="param.name">
                                 <label class="input-group-text">код</label>
                                 <input type="text" class="form-control" v-model="param.paramid">
+                                <label class="input-group-text">Значение</label>
+                                <select
+                                    v-if="param.type === 'ComboBox'"
+                                    class="form-control"
+                                    v-model="param.svalue">
+                                    <option v-for="option in param.value" :key="option.valueid" :value="option.valueid">
+                                        {{ option.value }}
+                                    </option>
+                                </select>
+                                <input v-if="param.type === 'Decimal'"
+                                    type="text" v-model="param.value">
+                                <button class="btn btn-outline-success"
+                                    @click="addParam(param)">
+                                    Add
+                                </button>
                             </div>
-                            <label class="input-group-text">Значение</label>
-                            <select v-if="param.type === 'ComboBox'" class="form-control">
-                                <option v-for="option in param.value" :key="option.valueid" :value="option.valueid">
-                                    {{ option.value }}
-                                </option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -394,7 +432,7 @@ const updateData = async () => {
 }
 .selected-photo {
     border-color: green;
-    border-width: 2px;
+    border-width: 5px;
 }
 select, input{
     background-color: black;
@@ -413,5 +451,8 @@ select, input{
 .danger-row {
     background-color: brown;
     color: white;
+}
+.add-param-box {
+    margin-top: 20px;
 }
 </style>

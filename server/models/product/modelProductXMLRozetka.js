@@ -14,7 +14,8 @@ const getProductList = async () => {
         LEFT JOIN rozetka_xml zx ON zm.id = zx.idXML
         JOIN zapchasti_toType ztt ON zm.id = ztt.id
         JOIN zapchasti_typeList ztl ON ztt.idType = ztl.idType
-        WHERE zm.dateCreate >= UNIX_TIMESTAMP( CURDATE( ) - INTERVAL 2 YEAR )
+        WHERE zm.dayOstatok >= UNIX_TIMESTAMP( CURDATE( ) - INTERVAL 2 YEAR )
+        OR zm.dateOstatok >= UNIX_TIMESTAMP( CURDATE( ) - INTERVAL 2 YEAR )
         ;
     `;
 

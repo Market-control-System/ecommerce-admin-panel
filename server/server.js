@@ -35,7 +35,7 @@ app.listen(PORT, () => {
       // Например, если функция доступна как someInternalFunction()
 
       // Если вы хотите сделать HTTP-запрос к маршруту вашего API
-      const response = await axios.get('http://localhost:3000/api/xml/create-xml-rozetka');
+      const response = await axios.get('https://seal-app-w3yo5.ondigitalocean.app/api/xml/create-xml-rozetka');
       console.log('Ответ от маршрута: ', response.data);
     } catch (error) {
       console.error('Ошибка при выполнении задачи: ', error.message);
