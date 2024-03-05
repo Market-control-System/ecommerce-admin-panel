@@ -103,6 +103,14 @@ function addParam(tmp) {
                 paramid: tmp.paramid,
             });
         }
+        if (tmp.type === 'TextInput') {
+            params.value.push({
+                name: tmp.name,
+                value: tmp.value,
+                valueid: null,
+                paramid: tmp.paramid,
+            });
+        }
     }
 }
 // Удаление параметра по индексу
@@ -403,6 +411,8 @@ const updateData = async () => {
                                     </option>
                                 </select>
                                 <input v-if="param.type === 'Decimal'"
+                                    type="text" v-model="param.value">
+                                <input v-if="param.type === 'TextInput'"
                                     type="text" v-model="param.value">
                                 <button class="btn btn-outline-success"
                                     @click="addParam(param)">
