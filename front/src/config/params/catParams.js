@@ -15,6 +15,7 @@ import param24017 from './param24017';
 import param202206 from './param202206';
 import param202212 from './param202212';
 import param202218 from './param202218';
+import param202308 from './param202308';
 
 const catParams = {
     c4657638: [ // Тросы и ремни на мотоблок
@@ -52,6 +53,18 @@ const catParams = {
         param202206,
         param202212,
         param202218,
+    ],
+    c4657608: [ // Фільтри на мотоблок
+        madeCountry,
+        param202182,
+        param202188,
+        param202194,
+        param202308,
+        param24002,
+        param24005,
+        param24015,
+        param24017,
+        param141072,
     ],
 };
 
