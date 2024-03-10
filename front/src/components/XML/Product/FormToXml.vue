@@ -111,6 +111,14 @@ function addParam(tmp) {
                 paramid: tmp.paramid,
             });
         }
+        if (tmp.type === 'TextArea') {
+            params.value.push({
+                name: tmp.name,
+                value: tmp.value,
+                valueid: null,
+                paramid: tmp.paramid,
+            });
+        }
     }
 }
 // Удаление параметра по индексу
@@ -414,6 +422,11 @@ const updateData = async () => {
                                     type="text" v-model="param.value">
                                 <input v-if="param.type === 'TextInput'"
                                     type="text" v-model="param.value">
+                                <textarea v-if="param.type === 'TextArea'"
+                                    class="value-textarea"
+                                    v-model="param.value">
+
+                                </textarea>
                                 <button class="btn btn-outline-success"
                                     @click="addParam(param)">
                                     Add
@@ -464,5 +477,8 @@ select, input{
 }
 .add-param-box {
     margin-top: 20px;
+}
+.value-textarea {
+    height: 200px;
 }
 </style>

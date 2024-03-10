@@ -1,7 +1,7 @@
 const param202296 = {
     type: 'ComboBox',
     name: 'Вид',
-    paramid: '02296',
+    paramid: '202296',
     value: [
         {
             valueid: '2398992',

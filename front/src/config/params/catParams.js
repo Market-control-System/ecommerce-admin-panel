@@ -10,6 +10,11 @@ import param24003 from './param24003';
 import param24005 from './param24005';
 import param202296 from './param202296';
 import param24002 from './param24002';
+import param24015 from './param24015';
+import param24017 from './param24017';
+import param202206 from './param202206';
+import param202212 from './param202212';
+import param202218 from './param202218';
 
 const catParams = {
     c4657638: [ // Тросы и ремни на мотоблок
@@ -33,6 +38,20 @@ const catParams = {
         param24005,
         param24002,
 
+    ],
+    c4657578: [ // Коленвалы и шатуны на мотоблок
+        madeCountry,
+        param202188,
+        param202182,
+        param202194,
+        param24002,
+        param24003,
+        param24005,
+        param24015,
+        param24017,
+        param202206,
+        param202212,
+        param202218,
     ],
 };
 
