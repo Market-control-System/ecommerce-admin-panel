@@ -11,18 +11,44 @@ import xmlApiController from '@/api-service/xmlApiController';
 const useXmlRozetkaStore = defineStore('xmlRozetka', {
     state: () => ({
         isLoad: false,
-        zp: [],
-        zpOrigin: [],
-        catList: [],
+        zpNow: [],
+        zpOrigin: [], // оригинальный массив с сервера - полный набор
+        catList: [], // список категорий на маркетплейсе
         currentPage: 1,
         pageSize: 30,
+        filtr: { // набор для фильтрации
+            typeId: 0, // по нашему типу запчасти
+            isInNotXML: false, // только те что не в XML
+            isOstatok: false, // отлько где остаток больше 0
+        },
     }),
     getters: {
+        // вычисляем реактивно отрфильтрованный список
+        zp: (state) => {
+            let tempArr = [...state.zpOrigin];
+            // если стоит флаг - Только то что в наличии
+            if (state.filtr.isOstatok) {
+                tempArr = tempArr.filter((item) => item.productInfo.ostatok > 0);
+            }
+            // если установлено показывать те что отсутствуют в XML
+            if (state.filtr.isInNotXML) {
+                tempArr = tempArr.filter((item) => !item.productInXML.kod);
+            }
+            if (state.filtr.typeId === 0) {
+                state.zpNow = tempArr;
+                return tempArr;
+            }
+            const temp = tempArr.filter((item) => item.productInfo.category.id === state.filtr.typeId);
+            state.zpNow = temp;
+            return temp;
+        },
         // Getter для фильтрации товаров по текущей странице
         pagedProducts: (state) => {
+            // обращение в этом геттере к геттерму zp - выдавало ошибку про незвестность зп
+            // поэтому создал промежуточный стейт
             const start = (state.currentPage - 1) * state.pageSize;
             const end = start + state.pageSize;
-            return state.zp.slice(start, end);
+            return state.zpNow.slice(start, end);
         },
     },
     actions: {
@@ -31,6 +57,10 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
         },
         async loadProduct() {
             const error = await createErrorData();
+            this.currentPage = 1;
+            this.filtr.isInNotXML = false;
+            this.filtr.isOstatok = false;
+            this.filtr.typeId = 0;
             try {
                 // делаем запрос на сервер
                 this.isLoad = true;
@@ -43,7 +73,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
                 }
                 // анализируем ответ
                 // если все ок - возвращаем данные
-                this.zp = [...result.res];
+                // this.zp = [...result.res];
                 this.zpOrigin = [...result.res];
                 this.isLoad = false;
                 return true;
@@ -54,15 +84,21 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
                 return error;
             }
         },
-        async filtrType(typeId) {
-            // фильтруем список товаров по типу запчасти
+        filtrType(typeId) {
+            // устанавливаем параметр фильтра и сбрасываем текущую страницу
             this.currentPage = 1;
-            if (typeId === 0) {
-                this.zp = [...this.zpOrigin];
-                return true;
-            }
-
-            this.zp = this.zpOrigin.filter((item) => item.productInfo.category.id === typeId);
+            this.filtr.typeId = typeId;
+            return true;
+        },
+        filtrIsInNotXML(value) {
+            // устанавливаем параметр фильтра и сбрасываем текущую страницу
+            this.currentPage = 1;
+            this.filtr.isInNotXML = value;
+            return true;
+        },
+        filtrIsOstatok(value) {
+            this.currentPage = 1;
+            this.filtr.isOstatok = value;
             return true;
         },
         async loadCat() {

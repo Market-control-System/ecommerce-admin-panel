@@ -7,13 +7,14 @@ import SelectType from '@/components/products/FiltrBTN/SelectType.vue';
 
 import useXmlRozetkaStore from '@/stores/xml/xmlRozetkaStore';
 import useAlertModalStore from '@/stores/alertModalStore';
+import XMLRozetkaIsInXML from '@/components/products/FiltrBTN/XMLRozetkaIsInXML.vue';
 
 const xmlRoetkaStore = useXmlRozetkaStore();
 const alertModal = useAlertModalStore();
 
 const loadProduct = async () => {
-    const rezult = await xmlRoetkaStore.loadProduct();
     const rezultCat = await xmlRoetkaStore.loadCat();
+    const rezult = await xmlRoetkaStore.loadProduct();
 
     if (rezult.err) {
         alertModal.openModal(rezult.mesasge, rezult.statusCode);
@@ -23,9 +24,9 @@ const loadProduct = async () => {
     }
 };
 
-async function updateFiltrSelectType(newType) {
+function updateFiltrSelectType(newType) {
     // console.log('Select new type ', newType);
-    await xmlRoetkaStore.filtrType(parseInt(newType, 10));
+    xmlRoetkaStore.filtrType(parseInt(newType, 10));
 }
 
 </script>
@@ -36,9 +37,9 @@ async function updateFiltrSelectType(newType) {
         <div class="row">
             <div class="col-md-3">XML Rozetka (Cat. -
                 <span v-if="xmlRoetkaStore.isLoad">load...</span>
-                <span v-else> {{ xmlRoetkaStore.catList.length }}</span>
+                <span v-else> {{ xmlRoetkaStore.catList?.length }}</span>
                 Product -
-                <span v-if="!xmlRoetkaStore.isLoad"> {{ xmlRoetkaStore.zp.length }}</span>)
+                <span v-if="!xmlRoetkaStore.isLoad"> {{ xmlRoetkaStore.zp?.length }}</span>)
             </div>
             <div class="col-md-2">
                 <button class="btn btn-outline-success" @click="loadProduct">
@@ -46,7 +47,12 @@ async function updateFiltrSelectType(newType) {
                 </button>
             </div>
             <div class="col-md-2">
-                <SelectType @update:selected-type="updateFiltrSelectType"/>
+                <SelectType @update:selected-type="updateFiltrSelectType"
+                    v-if="xmlRoetkaStore.zpOrigin"/>
+            </div>
+            <div class="col-md-2">
+                <XMLRozetkaIsInXML check-text="Без XML" check-type="isInNotXml" />
+                <XMLRozetkaIsInXML check-text="Только в наличии" check-type="isOstatok" />
             </div>
         </div>
         <hr />
