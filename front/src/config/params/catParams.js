@@ -16,6 +16,7 @@ import param202206 from './param202206';
 import param202212 from './param202212';
 import param202218 from './param202218';
 import param202308 from './param202308';
+import param202272 from './param202272';
 
 const catParams = {
     c4657638: [ // Тросы и ремни на мотоблок
@@ -60,6 +61,17 @@ const catParams = {
         param202188,
         param202194,
         param202308,
+        param24002,
+        param24005,
+        param24015,
+        param24017,
+        param141072,
+    ],
+    c4657590: [ // Система запуска мотоблока
+        param202272,
+        param202182,
+        param202188,
+        param202194,
         param24002,
         param24005,
         param24015,
