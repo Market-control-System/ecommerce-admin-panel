@@ -17,6 +17,7 @@ import param202212 from './param202212';
 import param202218 from './param202218';
 import param202308 from './param202308';
 import param202272 from './param202272';
+import param202314 from './param202314';
 
 const catParams = {
     c4657638: [ // Тросы и ремни на мотоблок
@@ -77,6 +78,16 @@ const catParams = {
         param24015,
         param24017,
         param141072,
+    ],
+    c4657614: [ // Циліндро-поршнева група мотоблока
+        param202182,
+        param202188,
+        param202194,
+        param202314,
+        param24002,
+        param24005,
+        param24015,
+        param24017,
     ],
 };
 
