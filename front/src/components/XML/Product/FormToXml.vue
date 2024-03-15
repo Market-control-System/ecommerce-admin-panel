@@ -407,8 +407,7 @@ const updateData = async () => {
                             <div class="input-group mb-3">
                                 <label class="input-group-text">параметр</label>
                                 <input type="text" class="form-control" v-model="param.name">
-                                <label class="input-group-text">код</label>
-                                <input type="text" class="form-control" v-model="param.paramid">
+                                <input type="hidden" class="form-control" v-model="param.paramid">
                                 <label class="input-group-text">Значение</label>
                                 <select
                                     v-if="param.type === 'ComboBox'"

@@ -8,6 +8,15 @@ const xmlRoutes = [
             title: 'XML Rozetka',
         },
     },
+    {
+        path: '/xml/Epicentr',
+        name: 'xmlepicentr',
+        component: () => import('../views/XML/XmlEpicentr.vue'),
+        meta: {
+            requiresAuth: false,
+            title: 'XML Epicentr',
+        },
+    },
 ];
 
 export default xmlRoutes;

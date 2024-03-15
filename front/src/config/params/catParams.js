@@ -28,6 +28,7 @@ const catParams = {
         param202362,
         param202368,
         param141072,
+        param24015,
     ],
     c4657596: [ // Топливная система мотоблока
         madeCountry,
