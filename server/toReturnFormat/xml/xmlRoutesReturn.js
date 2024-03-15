@@ -61,6 +61,25 @@ const productInXML = () => ({
     foto: foto(),
 });
 
+const productInXMLEpicentr = () => ({
+    kod: null,
+    id: null,
+    vendor: null,
+    param: [
+        {
+            name: null,
+            value: null,
+        },
+    ],
+    category: {
+        id: null,
+        ua: null,
+    },
+    title: title(),
+    description: description(),
+    foto: [],
+});
+
 const xmlRozetka = () => ({
     productInfo: productInfo(),
     productInXML: productInXML(),
@@ -82,6 +101,7 @@ const toReturnXML = {
     rout: {
         xmlRozetka: xmlRozetka,
         xmlCatRozetka: xmlCatRozetka,
+        xmlEpicentr: productInXMLEpicentr,
     }
 };
 

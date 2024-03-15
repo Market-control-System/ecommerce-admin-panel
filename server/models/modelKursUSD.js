@@ -12,6 +12,12 @@ const getKurs = async () => {
     try {
         const rows = await executeQuery(DBName, query, []);
         // console.log('KURS USD row - ', rows);
+        if (!tempkursUSD[0].kurs_d) {
+            const error = new Error('Error get kurs from DB');
+            error.debug = `ff `;
+            error.status = err.status || 500;
+            throw(error);
+        }
         return rows;
     } catch(err) {
         const error = new Error(err.message || `Internal server error`);
