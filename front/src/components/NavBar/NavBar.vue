@@ -69,7 +69,7 @@ const buttonExitClick = async (clickBTN) => {
                             <li>
                                 <router-link
                                     class="dropdown-item"
-                                    to="#">
+                                    to="/xml/Epicentr">
                                         Epicentr XML
                                 </router-link>
                             </li>

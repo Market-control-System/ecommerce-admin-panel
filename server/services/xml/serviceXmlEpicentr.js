@@ -48,7 +48,7 @@ const getProductAll = async () => {
 const getCatEpicentr = async () => {
     try {
         console.log('XML get cat start ....');
-        const tempCat = await modelProductXMLEpicentr.getCatRozetka();
+        const tempCat = await modelProductXMLEpicentr.getCatEpicentr();
         
         const result = tempCat.map(cat  => {
             const temp = toReturnXML.rout.xmlCatRozetka();

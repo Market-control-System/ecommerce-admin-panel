@@ -1,5 +1,5 @@
 const config = {
-    serverApiBaseURL: 'https://seal-app-w3yo5.ondigitalocean.app', // 'http://localhost:3000',
+    serverApiBaseURL: 'http://localhost:3000', // 'https://seal-app-w3yo5.ondigitalocean.app',
     validLoginRgp: /^\d{3}-\d{3}-\d{2}-\d{2}$/, // 097-333-22-22
     validPassword: {
         minLen: 5,
