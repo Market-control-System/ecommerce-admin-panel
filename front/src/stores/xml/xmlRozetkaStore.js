@@ -56,7 +56,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
             this.currentPage = page;
         },
         async loadProduct() {
-            const error = await createErrorData();
+            const error = await createErrorData.createErrorDataSync();
             this.currentPage = 1;
             this.filtr.isInNotXML = false;
             this.filtr.isOstatok = false;
@@ -102,7 +102,7 @@ const useXmlRozetkaStore = defineStore('xmlRozetka', {
             return true;
         },
         async loadCat() {
-            const error = await createErrorData();
+            const error = await createErrorData.createErrorDataSync();
             try {
                 // делаем запрос на сервер
                 this.isLoad = true;

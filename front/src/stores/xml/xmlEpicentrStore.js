@@ -55,7 +55,7 @@ const useXmlEpicentrStore = defineStore('xmlEpicentr', {
             this.currentPage = page;
         },
         async loadProduct() {
-            const error = await createErrorData();
+            const error = await createErrorData.createErrorDataSync();
             this.currentPage = 1;
             try {
                 // делаем запрос на сервер
@@ -63,7 +63,7 @@ const useXmlEpicentrStore = defineStore('xmlEpicentr', {
                 const result = await xmlApiController.getProductEpicentr();
                 if (result.err) {
                     error.err = true;
-                    error.mesasge = result.message;
+                    error.message = result.message;
                     error.statusCode = result.status || 500;
                     return error;
                 }
@@ -81,7 +81,7 @@ const useXmlEpicentrStore = defineStore('xmlEpicentr', {
             }
         },
         async loadCat() {
-            const error = await createErrorData();
+            const error = await createErrorData.createErrorDataSync();
             try {
                 // делаем запрос на сервер
                 this.isLoad = true;

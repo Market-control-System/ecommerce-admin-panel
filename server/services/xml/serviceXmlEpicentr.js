@@ -30,7 +30,7 @@ const getProductAll = async () => {
 
             temp.vendor = product.vendor;
 
-            temp.param = JSON.parse(product.param);
+            // temp.param = JSON.parse(product.param);
 
             return temp;
         });
