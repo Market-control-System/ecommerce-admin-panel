@@ -18,6 +18,12 @@ import param202218 from './param202218';
 import param202308 from './param202308';
 import param202272 from './param202272';
 import param202314 from './param202314';
+import param179403 from './param179403';
+import param179715 from './param179715';
+import param179727 from './param179727';
+import param195381 from './param195381';
+import param195963 from './param195963';
+import param23577 from './param23577';
 
 const catParams = {
     c4657638: [ // Тросы и ремни на мотоблок
@@ -89,6 +95,15 @@ const catParams = {
         param24005,
         param24015,
         param24017,
+    ],
+    c4650339: [ // Запчастини для бензинових двигунів
+        param141072,
+        param179403,
+        param179715,
+        param179727,
+        param195381,
+        param195963,
+        param23577,
     ],
 };
 
