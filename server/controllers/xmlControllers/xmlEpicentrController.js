@@ -45,7 +45,7 @@ const addUpdateXmlRow = async (req, res, next) => {
         //    return next(error);
         // }
 
-        const result = ''; // await serviceXmlRozetka.addUpdateXmlRow(formData);
+        const result = await serviceXmlEpicentr.addUpdateXmlRow(formData);
         
         return res.status(200).json(result);
     } catch (err) {

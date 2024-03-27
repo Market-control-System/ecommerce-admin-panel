@@ -95,10 +95,31 @@ const updateRowXML = async (formData) => {
     }
 };
 
+// добавление XML Эпицентр
+const updateRowXMLEpicentr = async (formData) => {
+    const tokenStore = useTokenStore();
+
+    const method = 'POST';
+    const path = '/api/xml/update-xmlproduct-epicentr';
+    const sendData = { formData };
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${tokenStore.token}`, // Добавление токена в заголовки
+    };
+
+    try {
+        const resultSend = await apiProjectServer.sendReq(path, method, headers, sendData);
+        return resultSend;
+    } catch (err) {
+        return { err: true, message: `Якась помилка в контроллері - ${err}` };
+    }
+};
+
 const xmlApiController = {
     getProductRozetka,
     getCatRozetka,
     updateRowXML,
+    updateRowXMLEpicentr,
     getCatEpicentr,
     getProductEpicentr,
 };

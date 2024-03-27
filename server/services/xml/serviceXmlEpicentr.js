@@ -74,14 +74,14 @@ const addUpdateXmlRow = async (formData) => {
     try {
         // отправляем данные в модель - поиск товара за айдишником
 
-        const isIsset = await modelProductXMLEpicentr.searchProductById(formData.productId);
+        const isIsset = await modelProductXMLEpicentr.searchProductByKod(formData.productKod);
         console.log('isIsset - ', isIsset);
         if (isIsset.length === 0) {
             // если нет - запуск модели по добавлению
-            const reInsert = await modelProductXMLEpicentr.addXMLRow(formData);
             console.log('add row - ', reInsert);
         } else {
             // если есть - запуск модели по обновлению
+            const reInsert = await modelProductXMLEpicentr.addXMLRow(formData);
             console.log(' update must be');
         }
         

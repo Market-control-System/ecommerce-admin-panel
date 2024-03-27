@@ -13,6 +13,7 @@ router.post('/update-xmlproduct-rozetka', tokenUtil.verifyToken, checkRole(4), x
 
 router.get('/get-cat-epicentr', tokenUtil.verifyToken, checkRole(4), xmlEpicentrController.getCat);
 router.get('/get-product-epicentr', tokenUtil.verifyToken, checkRole(4), xmlEpicentrController.getProduct);
+router.post('/update-xmlproduct-epicentr', tokenUtil.verifyToken, checkRole(4), xmlEpicentrController.addUpdateXmlRow);
 
 router.get('/create-xml-rozetka', xmlRozetkaControllers.createXmlRozetka);
 router.get('/create-xml-epicentr', xmlEpicentrController.createXmlEpicentr);

@@ -51,6 +51,7 @@ export const configXmlCreate = {
         secure: false,
     },
     remoteFilePath: '/home/prorabdp/baseparts.com.ua/xml/rozetka.xml',
+    remoteFilePathEpic: '/home/prorabdp/baseparts.com.ua/xml/epicentr.xml',
     name: 'BaseParts',
     url: 'https://baseparts.com.ua',
 };

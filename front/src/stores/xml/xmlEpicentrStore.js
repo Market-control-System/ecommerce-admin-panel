@@ -106,14 +106,14 @@ const useXmlEpicentrStore = defineStore('xmlEpicentr', {
         },
         async updateRowXls(formData) {
             // проверка всех полей на наличие
-            const resValid = await this.validFormData(formData);
+            // const resValid = await this.validFormData(formData);
 
-            if (resValid.err) {
-                return resValid;
-            }
+            // if (resValid.err) {
+            //    return resValid;
+            // }
 
             // отправляем данные на сервер
-            const resSend = await xmlApiController.updateRowXML(formData);
+            const resSend = await xmlApiController.updateRowXMLEpicentr(formData);
             return resSend;
         },
         async validFormData(formData) {

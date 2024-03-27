@@ -62,7 +62,7 @@ const handleCategoryChange = (event) => {
     paramsFromCat.value = [...catParams[selectedId]];
 };
 
-// Функция для изменения активного раздела
+// Функция для изменения активного раздела (ТАБЫ)
 const setActiveSection = (section) => {
     activeSection.value = section;
 };

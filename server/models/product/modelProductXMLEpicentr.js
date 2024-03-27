@@ -9,7 +9,8 @@ const getProductList = async () => {
     const DBName = 'motoservice';
     const query = `
         SELECT *
-        FROM rozetka_xml xml;
+        FROM rozetka_xml xml
+        WHERE catIdEpicentr = '';
     `;
 
     try {
@@ -29,7 +30,8 @@ const getXmlOffers = async () => {
         SELECT xml . *, zm.ostatok, zp.cenaOutBS
         FROM rozetka_xml xml
         JOIN zapchasti_price zp ON xml.idXML = zp.id
-        JOIN zapchasti_model zm ON xml.idXML = zm.id;
+        JOIN zapchasti_model zm ON xml.idXML = zm.id
+        WHERE xml.catIdEpicentr <> '';
     `;
 
     try {
@@ -93,20 +95,38 @@ const searchProductById = async (idZapchast) => {
         error.status = err.status || 500;
     }
 };
-// добавление строки 
-const addXMLRow = async (D) => {
+
+const searchProductByKod = async (kodZp) => {
     const DBName = 'motoservice';
     const query = `
-        INSERT INTO rozetka_xml
-        (idXML, kodXML, catId, catNameUA, catRzId, price, vendor, name, name_ua, description, description_ua, param, picture)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        SELECT *
+        FROM rozetka_xml
+        WHERE kodXML = ?;
+    `;
+    try {
+        const rows = await executeQuery(DBName, query, [kodZp]);
+        return rows;
+    } catch(err) {
+        const error = new Error(err.message || `Internal server error`);
+        error.debug = `Error catch in model XML rozetka / getCatRozetka. stack err - ${err.stack}`;
+        error.status = err.status || 500;
+    }
+};
+// добавление строки 
+const addXMLRow = async (D) => {
+    // обновляем данные в строке - доабвляем эпицентра данные
+    const DBName = 'motoservice';
+    const query = `
+        UPDATE rozetka_xml
+        SET catNameEpicentr = ?,
+            catIdEpicentr = ?,
+            paramEpic = ?
+        WHERE kodXML = ?;
     `;
     try {
         const params = [
-            D.productId, D.productKod, D.productCatId, D.categoryName, D.productCatId,
-            D.priceUsd, D.productVendor, D.productNameRU, D.productNameUA,
-            D.productDescRU, D.productDescUA, // Убедитесь, что здесь не должно быть D.productDescRU дважды
-            JSON.stringify(D.params), D.selectedPhotos.join(';')
+            D.epicCatName, D.epicCatId,
+            JSON.stringify(D.params), D.productKod,
         ];
         const rows = await executeQuery(DBName, query, params);
         return rows;
@@ -114,8 +134,11 @@ const addXMLRow = async (D) => {
         const error = new Error(err.message || `Internal server error`);
         error.debug = `Error catch in model XML rozetka. stack err - ${err.stack}`;
         error.status = err.status || 500;
+        throw (error);
     }
 }
+
+
 
 const modelProductXMLEpicentr = {
     getProductList,
@@ -123,6 +146,7 @@ const modelProductXMLEpicentr = {
     getXmlOffers,
     getCatEpicentr,
     searchProductById,
+    searchProductByKod,
     addXMLRow,
 };
 
