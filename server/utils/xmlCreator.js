@@ -162,6 +162,8 @@ async function createXmlFileEpic (offerXml, kursUSD) {
             const offerEle = offersEle.ele('offer', { id: offer.kodXML, available: offer.ostatok > 0 });
             offerEle.ele('price').txt(Math.round(offer.cenaOutBS * kursUSD).toString()).up();
             offerEle.ele('category', {code: offer.catIdEpicentr}).txt(offer.catNameEpicentr).up();
+            // <attribute_set code="3343">Картини за номерами</attribute_set>
+            offerEle.ele('attribute_set', {code: offer.catIdEpicentr}).txt(offer.catNameEpicentr).up();
 
             offer.picture.split(';').forEach(pic => {
                 offerEle.ele('picture').txt(pic).up();
@@ -172,6 +174,15 @@ async function createXmlFileEpic (offerXml, kursUSD) {
 
             offerEle.ele('description', {lang: 'ru'}).txt(offer.description).up();
             offerEle.ele('description', {lang: 'ua'}).txt(offer.description_ua).up();
+
+            // <vendor code="38bc621b9f424403844ad267856b2f4b">Optimum Nutrition</vendor>
+            offerEle.ele('vendor', {code: '33c57c8764a549f7ad1445d62d874649'}).txt('Китай').up();
+            // <country_of_origin code="pol">Польща</country_of_origin>
+            offerEle.ele('country_of_origin', {code: 'chn'}).txt('Китай').up();
+            // <param name="Міра виміру" paramcode="measure" valuecode="measure_pcs">шт.</param>
+            offerEle.ele('param', {name: 'Міра виміру', paramcode: 'measure', valuecode: 'measure_pcs'}).txt('шт.').up();
+            // <param name="Мінімальна кратність товару" paramcode="ratio">1</param>
+            offerEle.ele('param', {name: 'Мінімальна кратність товару', paramcode: 'ratio'}).txt('1').up();
 
             JSON.parse(offer.paramEpic).forEach(param => {
                 // Инициализация объекта атрибутов с обязательным атрибутом name

@@ -1,134 +1,134 @@
 const param4 = {
     type: 'multiselect',
     name: 'Тип',
-    paramid: '4',
+    paramid: '50',
     value: [
         {
-            valueid: '130',
+            valueid: '2f0eb95b82cd1303fb87d593a7898a4b',
             value: 'ремкомплект',
         },
         {
-            valueid: '214835',
+            valueid: 'osewch8u6cajlr1z',
             value: 'кріплення',
         },
         {
-            valueid: '342512',
+            valueid: 'osewch8u6cajlr1z',
             value: 'полиця',
         },
         {
-            valueid: '349641',
+            valueid: 'wr51xdlpnkw5kgbk',
             value: 'камера',
         },
         {
-            valueid: '368196',
+            valueid: '5tr88npn0tsn8uej',
             value: 'насос',
         },
         {
-            valueid: '371790',
+            valueid: 'h9orvrj47k2rmjar',
             value: 'фільтр',
         },
         {
-            valueid: '384973',
+            valueid: 'hi9eukbf9ebxpafu',
             value: 'стартер',
         },
         {
-            valueid: '408043',
+            valueid: 'y3fokkwxxpzz98d7',
             value: 'термостат',
         },
         {
-            valueid: '413000',
+            valueid: '2rxwbntumgzwvpfo',
             value: 'адаптер',
         },
         {
-            valueid: '416793',
+            valueid: 'gu16mgfe5cv6bnuw',
             value: 'мотор',
         },
         {
-            valueid: '416794',
+            valueid: 'stbsfopb4jad2cmq',
             value: 'патрубок',
         },
         {
-            valueid: '416797',
+            valueid: 'xjrhqhfvz2n5guml',
             value: 'сальник',
         },
         {
-            valueid: '416802',
+            valueid: 'sdvupxmzv994yzkn',
             value: 'клапан',
         },
         {
-            valueid: '416804',
+            valueid: 'ywsanjklqz1evbox',
             value: 'редуктор',
         },
         {
-            valueid: '416806',
+            valueid: 'q8uqsc0xtdckpkgh',
             value: 'датчик',
         },
         {
-            valueid: '416815',
+            valueid: 'htqzvqw4t9wwbfid',
             value: 'ремінь',
         },
         {
-            valueid: '416819',
+            valueid: 'ubup9ftb4fql65mj',
             value: 'підшипник',
         },
         {
-            valueid: '416825',
+            valueid: 'cilczzdlognqojmd',
             value: 'бак',
         },
         {
-            valueid: '416826',
+            valueid: 'zmlvumcejgwc8eiz',
             value: 'корпус',
         },
         {
-            valueid: '416830',
+            valueid: 'yntrs8nsd3wc4m6i',
             value: 'кран',
         },
         {
-            valueid: '416836',
+            valueid: 'lmwziseitje6qy4i',
             value: 'форсунка',
         },
         {
-            valueid: '437465',
+            valueid: 'ghdfosmjfmzhecse',
             value: 'гільза',
         },
         {
-            valueid: '440495',
+            valueid: 'ohrldsidlydnqky2',
             value: 'глушники',
         },
         {
-            valueid: '455778',
+            valueid: 'tuufm435zmnwp9ig',
             value: 'вал',
         },
         {
-            valueid: '455780',
+            valueid: 'qgl6krsf9fav4fkq',
             value: 'втулка',
         },
         {
-            valueid: '455785',
+            valueid: '0rbz5b0g2naiheue',
             value: 'скребок',
         },
         {
-            valueid: '455787',
+            valueid: '8zmkmztxfbmbgzsx',
             value: 'диск',
         },
         {
-            valueid: '455805',
+            valueid: 'lxvdtwakbznlbo4d',
             value: 'колесо',
         },
         {
-            valueid: '455808',
+            valueid: 'l9nkr88urp0jvtis',
             value: 'ролик',
         },
         {
-            valueid: '455826',
+            valueid: '0nqy8k3j4z4ingkz',
             value: 'поршень',
         },
         {
-            valueid: '457999',
+            valueid: 'pnj074cjsjdupi8h',
             value: 'кільця',
         },
         {
-            valueid: '467803',
+            valueid: 'wpt9emtvj5nwulxx',
             value: 'свічка',
         },
     ],

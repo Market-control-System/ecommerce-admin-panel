@@ -68,8 +68,8 @@ const addParam = async (param) => {
             paramcode: param.paramid,
             name: param.name,
             nameru: null,
-            valuecode: param.valuecode.join(', '),
-            text: filteredValues.join(', '),
+            valuecode: param.valuecode.join(','),
+            text: filteredValues.join(','),
             textru: null,
         };
     } else if (param.type === 'text') {
