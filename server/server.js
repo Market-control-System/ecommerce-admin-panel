@@ -31,12 +31,13 @@ app.listen(PORT, () => {
   cron.schedule('0 * * * *', async () => {
     console.log('Запуск задачи по созданию XML-файла каждый час');
     try {
-      // Если вам нужно выполнить внутреннюю функцию сервера, вызовите её здесь
-      // Например, если функция доступна как someInternalFunction()
+    
 
-      // Если вы хотите сделать HTTP-запрос к маршруту вашего API
+      // HTTP-запрос к маршруту  API
       const response = await axios.get('https://seal-app-w3yo5.ondigitalocean.app/api/xml/create-xml-rozetka');
-      console.log('Ответ от маршрута: ', response.data);
+      const response2 = await axios.get('https://seal-app-w3yo5.ondigitalocean.app/api/xml/create-xml-epicentr');
+      console.log('Ответ от маршрута CREATE ROZETKA: ', response.data);
+      console.log('Ответ от маршрута CREATE EPICENTR : ', response2.data);
     } catch (error) {
       console.error('Ошибка при выполнении задачи: ', error.message);
     }
